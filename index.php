@@ -1,5 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+<title>Dashboard</title>
+<head>    
+  <header>
+    <link rel="stylesheet" href="style.css">
+    <div id="wrap">
+        <ul class="navbar">
+            <a href="login_page.php">Login</a><br>
+            <a href="logout.php">Logout</a>
+        </ul>
+      </div>    
+  </header>
+</head>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
