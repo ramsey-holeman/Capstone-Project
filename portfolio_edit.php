@@ -54,6 +54,7 @@ session_start();
 </head>
 <body>
     <h2>Add Stocks</h2>
+    <div>
     <p>Here you can add stocks that are in your portfolio</p>
     <form action="" method = "post">
         <label for="ticker">Stock Ticker:</label>
@@ -70,5 +71,6 @@ session_start();
 
         <input type="submit" value="Add"><br>
     </form>
+    </div>
 </body>
 </html>
