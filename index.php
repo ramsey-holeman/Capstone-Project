@@ -1,7 +1,8 @@
 <?php
 session_start();
-  include "db_connect.php";
-  include "functions.php";
+    include "db_connect.php";
+    include "functions.php";
+    $user_data = check_login($conn);
 
 ?>
 <!DOCTYPE html>
@@ -14,6 +15,7 @@ session_start();
         <ul class="navbar">
             <a href="login_page.php">Login</a><br>
             <a href="logout.php">Logout</a>
+            <a href="portfolio_edit.php">Edit Portfolio</a>
         </ul>
       </div>    
   </header>

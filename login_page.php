@@ -10,7 +10,7 @@
       if(!empty($email)){
           // read from database
 
-          $sql = "select * from alumni where email='$email' limit 1";
+          $sql = "select * from users where email='$email' limit 1";
           $result = mysqli_query($conn, $sql);
 
           if($result){
@@ -44,12 +44,12 @@
 </head>
 <body>
     <h2>Login</h2>
-    <form action="">
+    <form action="" method = "post">
         <label for="email">Email:</label>
         <input type="email" name="email" id="email"><br>
         
-        <label for="password">Password:</label>
-        <input type="text" id="password" name="password"><br>
+        <label for="pword">Password:</label>
+        <input type="password" id="pword" name="pword"><br>
 
         <input type="submit" value="Login">
     </form>
