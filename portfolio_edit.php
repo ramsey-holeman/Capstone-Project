@@ -16,7 +16,7 @@ session_start();
         if(!empty($stock) && !empty($shares) && !empty($cost) && !empty($date)){
             // save to database
             $id = $_SESSION['user_id'];
-            $sql = "insert into stocks (user_id,ticker,share_num,cost,date) values('$id', '$ticker', '$share_num', '$cost', '$date')";
+            $sql = "insert into stocks (user_id,ticker,share_num,cost,date) values('$id', '$stock', '$shares', '$cost', '$date')";
             mysqli_query($conn, $sql);
             echo "Position added successfully";
             header("Location: portfolio_edit.php");
@@ -38,9 +38,10 @@ session_start();
     <link rel="stylesheet" href="style.css">
     <div id="wrap">
         <ul class="navbar">
+            <a href="index.php">Dashboard</a>
+            <a href="portfolio_edit.php">Edit Portfolio</a>
             <a href="login_page.php">Login</a><br>
             <a href="logout.php">Logout</a>
-            <a href="portfolio_edit.php">Edit Portfolio</a>
         </ul>
       </div>    
   </header>
@@ -64,7 +65,7 @@ session_start();
         <input type="text" id="share_num" name="share_num"><br>
 
         <label for="cost">Average cost of share:</label>
-        <input type="number" name="cost" id="cost"><br>
+        <input type="number" name="cost" id="cost" step=any><br>
 
         <label for="date">Date of Transaction:</label>
         <input type="date" name="date" id="date"><br>

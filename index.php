@@ -13,9 +13,10 @@ session_start();
     <link rel="stylesheet" href="style.css">
     <div id="wrap">
         <ul class="navbar">
+            <a href="index.php">Dashboard</a>
+            <a href="portfolio_edit.php">Edit Portfolio</a>
             <a href="login_page.php">Login</a><br>
             <a href="logout.php">Logout</a>
-            <a href="portfolio_edit.php">Edit Portfolio</a>
         </ul>
       </div>    
   </header>
