@@ -30,6 +30,7 @@ session_start();
 </head>
 <body>
     <h1>Portfolio Dashboard</h1>
+    <h4>Hello, <?php echo $user_data['fname']; echo " "; echo $user_data['lname']; ?>! Welcome back!</h4>
     
 </body>
 </html>
