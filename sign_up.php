@@ -14,7 +14,7 @@ session_start();
     if(!empty($firstname) && !empty($lastname) && !empty($email) && !empty($password)){
         // save to database
         $user_id = random_num(10);
-        $sql = "insert into alumni (user_id,first_name,last_name,email,pword) values('$user_id', '$firstname', '$lastname', '$email', '$password')";
+        $sql = "insert into users (user_id,first_name,last_name,email,pword) values('$user_id', '$firstname', '$lastname', '$email', '$password')";
         mysqli_query($conn, $sql);
         echo "Sign Up was successful";
         header("Location: login_page.php");
@@ -41,21 +41,18 @@ session_start();
 <br>
 <form action="" method="post">
     <label for="fname">First Name:</label>
-    <input type="text" name="fname" id="fname"><br><br>
+    <input type="text" name="fname" id="fname" required><br><br>
 
     <label for="lname">Last Name:</label>
-    <input type="text" name="lname" id="lname"><br><br>
+    <input type="text" name="lname" id="lname" required><br><br>
 
     <label for="email">Email:</label>
-    <input type="email" name="email" id="email"><br><br>
+    <input type="email" name="email" id="email" required><br><br>
 
     <label for="pword">Password:</label>
-    <input type="password" name="pword" id="pword">
+    <input type="password" name="pword" id="pword" required><br><br>
 
-    <label for=""></label>
-
-
-    <input type="submit" value="Sign Up">
+    <input type="submit" value="Sign Up"><br><br>
 </form>
 </body>
 </html>

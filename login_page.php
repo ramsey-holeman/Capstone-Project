@@ -55,7 +55,7 @@
     </form>
     <p style="text-align: center;">Don't have an account? Click the link below to sign up!</p>
     <div>
-    <a href="sign_up.html">Click Here</a>
+    <a href="sign_up.php">Click Here</a>
     </div>
 </body>
 </html>
