@@ -10,7 +10,9 @@ session_start();
 <title>Dashboard</title>
 <head>    
   <header>
-    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="skeleton.css">
     <div id="wrap">
         <ul class="navbar">
             <a href="index.php">Dashboard</a>
