@@ -56,7 +56,7 @@
 <body>
     <h2 style="text-align: center">Login</h2>
     <div>
-      <form style="text-align: center" action="" method = "post">
+      <form style="text-align: center" action="" method = "post" autocomplete="off">
           <label for="email">Email:</label>
           <input type="email" name="email" id="email"><br>
           

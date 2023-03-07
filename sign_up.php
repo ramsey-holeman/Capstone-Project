@@ -41,7 +41,7 @@ session_start();
 <body>
 <h2>Sign Up Page</h2>
 <br>
-<form action="" method="post">
+<form action="" method="post" autocomplete="off">
     <label for="fname">First Name:</label>
     <input type="text" name="fname" id="fname" required><br><br>
 
