@@ -331,11 +331,33 @@ pre > code {
 
 /* Tables
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+.tableClass{
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x:auto;
+  width: 100%;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x:auto;
+  width: 100%;
+  border: 1px solid black;
+}
+
+tbody {
+  margin-left: auto;
+  margin-right: auto;
+  overflow-x:auto;
+  width: 100%;
+}
+
 th,
 td {
   padding: 12px 15px;
   text-align: left;
-  border-bottom: 1px solid #E1E1E1; }
+  border-bottom: 1px solid #000000; }
 th:first-child,
 td:first-child {
   padding-left: 0; }
@@ -343,7 +365,9 @@ th:last-child,
 td:last-child {
   padding-right: 0; }
 
-
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 /* Spacing
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 button,

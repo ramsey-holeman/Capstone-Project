@@ -126,5 +126,32 @@ session_start();
         <input type="submit" name="sell_stock" value="Sell"><br>
     </form>
     </div>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <td>Stock Ticker</td>
+                    <td>Number of Shares</td>
+                    <td>Average Cost</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                    $results = mysqli_query($conn, "SELECT * FROM stocks");
+                    while($row = mysqli_fetch_array($results)) {
+                    ?>
+                        <tr>
+                            <td><?php echo $row['ticker']?></td>
+                            <td><?php echo $row['share_num']?></td>
+                            <td><?php echo $row['cost']?></td>
+                        </tr>
+
+                    <?php
+                    }
+                    mysqli_close($conn);
+                    ?>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>
