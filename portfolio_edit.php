@@ -64,12 +64,12 @@ session_start();
                 }
                 else{
                     $id = $_SESSION['user_id'];
-                    $sql = "UPDATE stocks SET share_num = share_num + ?  AND (cost + ?) / 2 WHERE ticker = ? AND user_id = ?";
+                    $sql = "UPDATE stocks SET share_num = share_num + ? WHERE ticker = ? AND user_id = ?";
                     $stmt = mysqli_prepare($conn, $sql);
-                    mysqli_stmt_bind_param($stmt, 'idsi', $shares, $cost, $stock, $id);
+                    mysqli_stmt_bind_param($stmt, 'isi', $shares, $stock, $id);
                     mysqli_stmt_execute($stmt);
                     
-                    // mysqli_query($conn, $sql);
+                    //Add and average cost function
                     echo "Position updated successfully. You have bought $shares shares of $stock";
                     header("Location: portfolio_edit.php");
                     exit();
@@ -80,16 +80,23 @@ session_start();
             }
         }
         if(isset($_POST['sell_stock'])) {
-            echo "This is Button2 that is selected";
+           
             if(!empty($stock) && !empty($shares) && !empty($cost) && !empty($date)){
-                // save to database
-                $id = $_SESSION['user_id'];
-                $sql = "insert into stocks (user_id,ticker,share_num,cost,date) values('$id', '$stock', '$shares', '$cost', '$date')";
-                mysqli_query($conn, $sql);
-                echo "Position added successfully";
-                header("Location: portfolio_edit.php");
-                exit();
-        
+                
+                $check_stock = "select * from stocks where ticker='$stock' limit 1";
+                $result = mysqli_query($conn, $check_stock);
+                // Checks if stock is in the database
+                if ($result->num_rows == 0){
+                    $id = $_SESSION['user_id'];
+                    $sql = "UPDATE stocks SET `share_num` = `share_num` - $shares WHERE ticker = $stock AND user_id = $id";
+                    mysqli_query($conn, $sql);
+                    echo "Position updated successfully. You have sold $shares shares of $stock";
+                    header("Location: portfolio_edit.php");
+                    exit();
+                }
+                else{
+                    echo "$stock is not in your portfolio";
+                }
             }else{
                 echo "Please enter some valid information";
             }
