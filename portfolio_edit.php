@@ -86,10 +86,13 @@ session_start();
                 $check_stock = "select * from stocks where ticker='$stock' limit 1";
                 $result = mysqli_query($conn, $check_stock);
                 // Checks if stock is in the database
-                if ($result->num_rows == 0){
+                if ($result->num_rows == 1){
                     $id = $_SESSION['user_id'];
-                    $sql = "UPDATE stocks SET `share_num` = `share_num` - $shares WHERE ticker = $stock AND user_id = $id";
-                    mysqli_query($conn, $sql);
+                    $sql = "UPDATE stocks SET share_num = share_num - ? WHERE ticker = ? AND user_id = ?";
+                    $stmt = mysqli_prepare($conn, $sql);
+                    mysqli_stmt_bind_param($stmt, 'isi', $shares, $stock, $id);
+                    mysqli_stmt_execute($stmt);
+                    
                     echo "Position updated successfully. You have sold $shares shares of $stock";
                     header("Location: portfolio_edit.php");
                     exit();
