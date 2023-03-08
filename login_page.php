@@ -35,35 +35,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <header>
-    <ul class="navbar">
-        <a href="index.php">Dashboard</a>
-        <a href="portfolio_edit.php">Edit Portfolio</a>
-        <a href="login_page.php">Login</a><br>
-        <a href="logout.php">Logout</a>
-    </ul>
-  </header>
-  <meta charset="utf-8">
+<meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Login Page</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="style.css">
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" href="skeleton.css">
 </head>
+ 
 <body>
-    <h2>Login</h2>
-    <form action="" method = "post">
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email"><br>
-        
-        <label for="pword">Password:</label>
-        <input type="password" id="pword" name="pword"><br>
-
-        <input type="submit" value="Login">
-    </form>
-    <p style="text-align: center;">Don't have an account? Click the link below to sign up!</p>
+    <h2 style="text-align: center">Login</h2>
     <div>
-    <a href="sign_up.php">Click Here</a>
+      <form style="text-align: center" action="" method = "post" autocomplete="off">
+          <label for="email">Email:</label>
+          <input type="email" name="email" id="email"><br>
+          
+          <label for="pword">Password:</label>
+          <input type="password" id="pword" name="pword"><br>
+
+          <input type="submit" value="Login">
+      </form>
+      <p style="text-align: center">Don't have an account? <a href="sign_up.php">Click here to sign up!</a></p>
     </div>
 </body>
 </html>

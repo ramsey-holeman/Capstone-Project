@@ -34,12 +34,14 @@ session_start();
     <title>Sign Up Page</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="style.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="skeleton.css">
 </head>
 <body>
 <h2>Sign Up Page</h2>
 <br>
-<form action="" method="post">
+<form action="" method="post" autocomplete="off">
     <label for="fname">First Name:</label>
     <input type="text" name="fname" id="fname" required><br><br>
 
