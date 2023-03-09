@@ -43,6 +43,16 @@
   <!-- <link rel="stylesheet" href="style.css"> -->
   <link rel="stylesheet" href="normalize.css">
   <link rel="stylesheet" href="skeleton.css">
+  <div id="wrap">
+        <nav>
+            <ul class="navbar">
+                <a href="index.php">Dashboard</a>
+                <a href="portfolio_edit.php">Edit Portfolio</a>
+                <a href="login_page.php">Login</a><br>
+                <a href="logout.php">Logout</a>
+            </ul>
+        </nav>
+    </div>  
 </head>
  
 <body>

@@ -16,13 +16,15 @@ session_start();
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="skeleton.css">
     <div id="wrap">
-        <ul class="navbar">
-            <a href="index.php">Dashboard</a>
-            <a href="portfolio_edit.php">Edit Portfolio</a>
-            <a href="login_page.php">Login</a><br>
-            <a href="logout.php">Logout</a>
-        </ul>
-      </div>    
+        <nav>
+            <ul class="navbar">
+                <a href="index.php">Dashboard</a>
+                <a href="portfolio_edit.php">Edit Portfolio</a>
+                <a href="login_page.php">Login</a><br>
+                <a href="logout.php">Logout</a>
+            </ul>
+        </nav>
+    </div>    
   </header>
 </head>
 <head>
@@ -32,7 +34,7 @@ session_start();
     <title>Portfolio Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>  
-    <script type="text/javascript" style="margin-left: auto; margin-right: auto">  
+    <script type="text/javascript">
     google.charts.load('current', {'packages':['corechart']});  
     google.charts.setOnLoadCallback(drawChart);  
     function drawChart()  
@@ -47,7 +49,7 @@ session_start();
                     ?>  
                 ]);  
         var options = {  
-                title: 'Stocks in your portfolio',  
+                title: '',  
                 //is3D:true,  
                 pieHole: 0.4  
                 };  
@@ -60,6 +62,7 @@ session_start();
     <h1>Portfolio Dashboard</h1>
     <h4>Hello, <?php echo $user_data['first_name']; echo " "; echo $user_data['last_name']; ?>! Welcome back!</h4>
     
-    <div id="piechart" style="width: 900px; height: 500px;"></div>  
+    <h6 style="text-align:center">Stocks In Your Portfolio</h6>
+    <div id="piechart" class="chartClass"></div>  
 </body>
 </html>

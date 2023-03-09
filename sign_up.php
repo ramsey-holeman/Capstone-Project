@@ -29,14 +29,24 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Sign Up Page</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- <link rel="stylesheet" href="style.css"> -->
-    <link rel="stylesheet" href="normalize.css">
-    <link rel="stylesheet" href="skeleton.css">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Sign Up Page</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="normalize.css">
+  <link rel="stylesheet" href="skeleton.css">
+  <div id="wrap">
+      <nav>
+          <ul class="navbar">
+              <a href="index.php">Dashboard</a>
+              <a href="portfolio_edit.php">Edit Portfolio</a>
+              <a href="login_page.php">Login</a><br>
+              <a href="logout.php">Logout</a>
+          </ul>
+      </nav>
+  </div>  
 </head>
 <body>
 <h2>Sign Up Page</h2>

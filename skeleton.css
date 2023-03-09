@@ -151,10 +151,13 @@ h6 { font-size: 1.5rem; line-height: 1.6;  letter-spacing: 0; }
   h6 { font-size: 1.5rem; }
 }
 
-title{
+.chartClass {
+  width: 50%;
+  height: 500px;
   text-align: center;
-  margin-left: auto;
-  margin-right: auto;
+  border: 5px solid;
+  margin: auto;
+  padding: 10px
 }
 
 p {
@@ -317,6 +320,28 @@ ol ul {
   font-size: 90%; }
 li {
   margin-bottom: 1rem; }
+
+nav ul {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  margin-right: 1em;
+}
+
+nav li:last-child {
+  margin-right: 0;
+}
+
+nav a {
+  display: block;
+  padding: 0.5em;
+  text-decoration: none;
+  color: #333;
+}
 
 
 /* Code
