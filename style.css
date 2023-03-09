@@ -46,3 +46,25 @@ div {
     }
   }
    */
+
+   .tableClass{
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x:auto;
+    width: 100%;
+  }
+  
+  table {
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x:auto;
+    width: 100%;
+    border: 1px solid black;
+  }
+  
+  tbody {
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x:auto;
+    width: 100%;
+  }

@@ -127,7 +127,8 @@ session_start();
     </form>
     </div>
     <div>
-        <table>
+        <p>Stock currently in your portfolio</p>
+        <table style="margin: auto">
             <thead>
                 <tr>
                     <td>Stock Ticker</td>
