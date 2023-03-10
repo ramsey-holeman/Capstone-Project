@@ -243,6 +243,14 @@ input[type="button"].button-primary:focus {
 
 /* Forms
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+form {
+  margin: auto;
+  display: block;
+  padding: 0.5em;
+  text-decoration: none;
+  color: #333;
+}
+
 input[type="email"],
 input[type="number"],
 input[type="search"],
