@@ -125,7 +125,10 @@ body {
   line-height: 1.6;
   font-weight: 400;
   font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #222; }
+  color: #222;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
 
 
 /* Typography
@@ -488,3 +491,17 @@ there.
 
 /* Larger than Desktop HD */
 @media (min-width: 1200px) {}
+
+/* Light mode styles */
+:root {
+  --background-color: #fff;
+  --text-color: #333;
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #333;
+    --text-color: #fff;
+  }
+}
