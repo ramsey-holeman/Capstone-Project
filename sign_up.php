@@ -51,7 +51,8 @@ session_start();
 <body>
 <h2>Sign Up Page</h2>
 <br>
-<form action="" method="post" autocomplete="off">
+<div>
+  <form action="" method="post" autocomplete="off">
     <label for="fname">First Name:</label>
     <input type="text" name="fname" id="fname" required><br><br>
 
@@ -65,6 +66,7 @@ session_start();
     <input type="password" name="pword" id="pword" required><br><br>
 
     <input type="submit" value="Sign Up"><br><br>
-</form>
+  </form>
+</div>
 </body>
 </html>
