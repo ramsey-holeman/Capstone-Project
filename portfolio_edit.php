@@ -53,7 +53,7 @@ session_start();
         if(isset($_POST['buy_stock'])) {
             if(!empty($stock) && !empty($shares) && !empty($cost) && !empty($date)){
                 
-                $check_stock = "select * from stocks where ticker='$stock' limit 1";
+                $check_stock = "select * from stocks where ticker='$stock' and user_id='$id' limit 1";
                 $result = mysqli_query($conn, $check_stock);
                 // If not found save to database
                 if ($result->num_rows == 0){
@@ -94,6 +94,13 @@ session_start();
                     $stmt = mysqli_prepare($conn, $sql);
                     mysqli_stmt_bind_param($stmt, 'isi', $shares, $stock, $id);
                     mysqli_stmt_execute($stmt);
+                    
+                    // Check if number of shares is equal to zero
+                    // $zero_stock = "select * from stocks where ticker='$stock' limit 1";
+                    // $result = mysqli_query($conn, $zero_stock);
+                    // if ($){
+
+                    // }
                     
                     echo "Position updated successfully. You have sold $shares shares of $stock";
                     header("Location: portfolio_edit.php");
@@ -140,7 +147,8 @@ session_start();
             </thead>
             <tbody>
                 <?php
-                    $results = mysqli_query($conn, "SELECT * FROM stocks");
+                    $id = $_SESSION['user_id'];
+                    $results = mysqli_query($conn, "SELECT * FROM stocks WHERE user_id = $id");
                     while($row = mysqli_fetch_array($results)) {
                     ?>
                         <tr>
