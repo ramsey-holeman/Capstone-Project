@@ -125,7 +125,10 @@ body {
   line-height: 1.6;
   font-weight: 400;
   font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  color: #222; }
+  color: #222;
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
 
 
 /* Typography
@@ -149,6 +152,15 @@ h6 { font-size: 1.5rem; line-height: 1.6;  letter-spacing: 0; }
   h4 { font-size: 3.0rem; }
   h5 { font-size: 2.4rem; }
   h6 { font-size: 1.5rem; }
+}
+
+.chartClass {
+  width: 50%;
+  height: 500px;
+  text-align: center;
+  border: 5px solid;
+  margin: auto;
+  padding: 10px
 }
 
 p {
@@ -234,6 +246,14 @@ input[type="button"].button-primary:focus {
 
 /* Forms
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
+form {
+  margin: auto;
+  display: block;
+  padding: 0.5em;
+  text-decoration: none;
+  color: #333;
+}
+
 input[type="email"],
 input[type="number"],
 input[type="search"],
@@ -277,7 +297,9 @@ textarea:focus,
 select:focus {
   border: 1px solid #33C3F0;
   outline: 0; }
-label,
+label {
+  color: #ffffff;
+}
 legend {
   display: block;
   margin-bottom: .5rem;
@@ -291,7 +313,9 @@ input[type="radio"] {
 label > .label-body {
   display: inline-block;
   margin-left: .5rem;
-  font-weight: normal; }
+  font-weight: normal;
+  color: #f2f2f2;
+}
 
 
 /* Lists
@@ -311,6 +335,29 @@ ol ul {
   font-size: 90%; }
 li {
   margin-bottom: 1rem; }
+
+nav ul {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  color: #FFFFFF;
+}
+
+nav li {
+  margin-right: 1em;
+}
+
+nav li:last-child {
+  margin-right: 0;
+}
+
+nav a {
+  display: block;
+  padding: 0.5em;
+  text-decoration: none;
+  color: #FFFFFF;
+}
 
 
 /* Code
@@ -449,3 +496,17 @@ there.
 
 /* Larger than Desktop HD */
 @media (min-width: 1200px) {}
+
+/* Light mode styles */
+:root {
+  --background-color: #fff;
+  --text-color: #333;
+}
+
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background-color: #333;
+    --text-color: #fff;
+  }
+}

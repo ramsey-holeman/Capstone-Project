@@ -11,13 +11,15 @@ session_start();
   <header>
     <link rel="stylesheet" href="style.css">
     <div id="wrap">
-        <ul class="navbar">
-            <a href="index.php">Dashboard</a>
-            <a href="portfolio_edit.php">Edit Portfolio</a>
-            <a href="login_page.php">Login</a><br>
-            <a href="logout.php">Logout</a>
-        </ul>
-      </div>    
+        <nav>
+            <ul class="navbar">
+                <a href="index.php">Dashboard</a>
+                <a href="portfolio_edit.php">Edit Portfolio</a>
+                <a href="login_page.php">Login</a><br>
+                <a href="logout.php">Logout</a>
+            </ul>
+        </nav>
+    </div>     
   </header>
 </head>
 <head>
@@ -127,7 +129,8 @@ session_start();
     </form>
     </div>
     <div>
-        <table>
+        <p>Stock currently in your portfolio</p>
+        <table style="margin: auto">
             <thead>
                 <tr>
                     <td>Stock Ticker</td>
