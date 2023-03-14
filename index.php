@@ -3,8 +3,8 @@ session_start();
     include "db_connect.php";
     include "functions.php";
     $user_data = check_login($conn);
-    
-    $query = "SELECT ticker, share_num FROM stocks";
+    $id = $user_data['user_id'];
+    $query = "SELECT ticker, share_num FROM stocks WHERE user_id = $id";
     $result = mysqli_query($conn, $query);
 ?>
 <!DOCTYPE html>
