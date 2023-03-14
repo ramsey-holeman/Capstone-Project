@@ -49,10 +49,10 @@ session_start();
   </div>  
 </head>
 <body>
-<h2>Sign Up Page</h2>
+<h2 style="text-align: center;">Sign Up Page</h2>
 <br>
 <div>
-  <form action="" method="post" autocomplete="off">
+  <form action="" method="post" autocomplete="off" style="text-align: center">
     <label for="fname">First Name:</label>
     <input type="text" name="fname" id="fname" required><br><br>
 

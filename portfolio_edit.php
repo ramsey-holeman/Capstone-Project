@@ -52,7 +52,7 @@ session_start();
         // If statement works only if a certain button is pressed
         if(isset($_POST['buy_stock'])) {
             if(!empty($stock) && !empty($shares) && !empty($cost) && !empty($date)){
-                
+                $id = $_SESSION['user_id'];
                 $check_stock = "select * from stocks where ticker='$stock' and user_id='$id' limit 1";
                 $result = mysqli_query($conn, $check_stock);
                 // If not found save to database
