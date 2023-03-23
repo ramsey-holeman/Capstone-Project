@@ -64,28 +64,122 @@ session_start();
     
     <h6 style="text-align:center">Stocks In Your Portfolio</h6>
     <div id="piechart" class="chartClass"></div>
-    <?php
-        require_once "vendor/autoload.php";
-        
-        use GuzzleHttp\Client;
-        
-        $client = new Client([
-            // Base URI is used with relative requests
-            'base_uri' => 'https://www.alphavantage.co',
-        ]);
-        
-        $response = $client->request('GET', '/query', [
-            'query' => [
-                'function' => 'TIME_SERIES_INTRADAY',
-                'symbol' => 'IBM',
-                'interval' => '5min',
-                'apikey' => 'YOUR_API_KEY',
-            ]
-        ]);
-        
-        $body = $response->getBody();
-        $arr_body = json_decode($body);
-        print_r($arr_body);
-    ?>  
+<?php
+###################################################################################################################################
+// if (!$conn) {
+//   die("Connection failed: " . mysqli_connect_error());
+// }
+
+// $sql = "SELECT ticker FROM stocks WHERE user_id = $id";
+// $result = mysqli_query($conn, $sql);
+
+// if (mysqli_num_rows($result) > 0) {
+//   // Step 2: For each stock symbol, make a request to the IEX Cloud API to retrieve its latest price
+//   while ($row = mysqli_fetch_assoc($result)) {
+//     $symbol = $row['ticker'];
+//     $apiKey = 'pk_4d0ca80ec38a41848be36a8ae380a17b'; // Replace with your IEX Cloud API key
+//     $apiUrl = "https://cloud.iexapis.com/stable/stock/{$symbol}/quote/latestPrice?token={$apiKey}";
+
+//     $ch = curl_init();
+//     curl_setopt($ch, CURLOPT_URL, $apiUrl);
+//     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//     $response = curl_exec($ch);
+//     curl_close($ch);
+
+//     // Step 3: Print out the stock symbol and its latest price
+//     if ($response) {
+//       #echo "{$symbol}: $" . number_format((float)$response, 2, '.', '') . "\n";
+//     } else {
+//       echo "Failed to retrieve stock price for {$symbol}.\n";
+//     }
+//     echo "</tr>";
+//     echo "</table>";
+//   }
+// } else {
+//   echo "No stocks found in database.\n";
+// }
+
+// mysqli_close($conn);
+######################################################################################################################################################
+?>
+
+<!-- JavaScript code -->
+<script>
+// const symbol = 'AAPL'; // Replace with the stock symbol you're interested in
+// const apiUrl = 'get_price.php?symbol=' + symbol;
+
+// function updatePrice() {
+//   const xhr = new XMLHttpRequest();
+//   xhr.onreadystatechange = function() {
+//     if (this.readyState === 4 && this.status === 200) {
+//       document.getElementById('price').textContent = this.responseText;
+//     }
+//   };
+//   xhr.open('GET', apiUrl, true);
+//   xhr.send();
+// }
+
+// // Update the price every 5 seconds
+// setInterval(updatePrice, 5000);
+</script>
+
+<!-- PHP code: get_price.php -->
+<?php
+// $symbol = $_GET['symbol'];
+// $apiKey = 'pk_4d0ca80ec38a41848be36a8ae380a17b'; // Replace with your IEX Cloud API key
+// $apiUrl = "https://cloud.iexapis.com/stable/stock/$symbol/quote/latestPrice?token=$apiKey";
+// echo file_get_contents($apiUrl);
+################################################################################################################################
+?>   
+
+
+
+<table>
+  <tr>
+      <th>Symbol</th>
+      <th>Price</th>
+  </tr>
+  <tbody>
+<?php
+if (!$conn) {
+  die("Connection failed: " . mysqli_connect_error());
+}
+
+$sql = "SELECT ticker FROM stocks WHERE user_id = $id";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) > 0) {
+  // Step 2: For each stock symbol, make a request to the IEX Cloud API to retrieve its latest price
+  while ($row = mysqli_fetch_assoc($result)) {
+    $symbol = $row['ticker'];
+    $apiKey = 'pk_4d0ca80ec38a41848be36a8ae380a17b'; // Replace with your IEX Cloud API key
+    $apiUrl = "https://cloud.iexapis.com/stable/stock/{$symbol}/quote/latestPrice?token={$apiKey}";
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $apiUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    // Step 3: Print out the stock symbol and its latest price
+    if ($response) {
+      #echo "{$symbol}: $" . number_format((float)$response, 2, '.', '') . "\n";
+      echo "<tr>";
+      echo "<td>". $symbol . "</td>";
+      echo "<td>" . $response . "</td>";
+      echo "</tr>";
+      echo "</table>";
+
+    } else {
+      echo "Failed to retrieve stock price for {$symbol}.\n";
+    }
+    
+  }
+} else {
+  echo "No stocks found in database.\n";
+}
+?>
+  </tbody>
+  </table> 
 </body>
 </html>

@@ -13,16 +13,26 @@
     <link rel="stylesheet" href="">
   </head>
   <body>
+  <div id="price-container">
+    <span id="symbol">AAPL</span>: $<span id="price"></span>
+  </div>
     <script>
-      const finnhub = require('finnhub');
-      
-      const api_key = finnhub.ApiClient.instance.authentications['api_key'];
-      api_key.apiKey = "cg80g7hr01qsgaf0k270cg80g7hr01qsgaf0k27g"
-      const finnhubClient = new finnhub.DefaultApi()
-      
-      finnhubClient.quote("AAPL", (error, data, response) => {
-        document.write(data);
-      });
-      </script>
+    // JavaScript code
+    const symbol = 'AAPL'; // Replace with the stock symbol you're interested in
+    const apiKey = 'pk_4d0ca80ec38a41848be36a8ae380a17b'; // Replace with your IEX Cloud API key
+    const apiUrl = `https://cloud.iexapis.com/stable/stock/${symbol}/quote/latestPrice?token=${apiKey}`;
+
+    function updatePrice() {
+      fetch(apiUrl)
+        .then(response => response.text())
+        .then(price => {
+          document.getElementById('price').textContent = price;
+        })
+        .catch(error => console.error(error));
+    }
+
+    // Update the price every 5 seconds
+    setInterval(updatePrice, 5000);
+    </script>
   </body>
 </html>
