@@ -63,6 +63,53 @@ session_start();
     <h4>Hello, <?php echo $user_data['first_name']; echo " "; echo $user_data['last_name']; ?>! Welcome back!</h4>
     
     <h6 style="text-align:center">Stocks In Your Portfolio</h6>
-    <div id="piechart" class="chartClass"></div>  
+    <div id="piechart" class="chartClass"></div>
+<table>
+  <tr>
+      <th>Symbol</th>
+      <th>Price</th>
+  </tr>
+  <tbody>
+<?php
+if (!$conn) {
+  die("Connection failed: " . mysqli_connect_error());
+}
+
+$sql = "SELECT ticker FROM stocks WHERE user_id = $id";
+$result = mysqli_query($conn, $sql);
+
+if (mysqli_num_rows($result) > 0) {
+  // Step 2: For each stock symbol, make a request to the IEX Cloud API to retrieve its latest price
+  while ($row = mysqli_fetch_assoc($result)) {
+    $symbol = $row['ticker'];
+    $apiKey = 'pk_4d0ca80ec38a41848be36a8ae380a17b'; // Replace with your IEX Cloud API key
+    $apiUrl = "https://cloud.iexapis.com/stable/stock/{$symbol}/quote/latestPrice?token={$apiKey}";
+
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $apiUrl);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    // Step 3: Print out the stock symbol and its latest price
+    if ($response == true) {
+    ?>
+      <tr>
+          <td><?php echo $symbol?></td>
+          <td><?php echo $response?></td>
+      </tr>
+    <?php
+    } 
+      else {
+      echo "Failed to retrieve stock price for {$symbol}.\n";
+    }
+    
+  }
+} else {
+  echo "No stocks found in database.\n";
+}
+?>
+  </tbody>
+  </table> 
 </body>
 </html>
