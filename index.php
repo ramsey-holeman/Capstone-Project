@@ -112,6 +112,7 @@ if (mysqli_num_rows($result) > 0) {
 } else {
   echo "No stocks found in database.\n";
 }
+mysqli_close($conn);
 ?>
   </tbody>
   </table> 
