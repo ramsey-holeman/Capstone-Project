@@ -12,7 +12,6 @@ session_start();
 <title>Dashboard</title>
 <head>    
   <header>
-    <!-- <link rel="stylesheet" href="style.css"> -->
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="skeleton.css">
     <div id="wrap">
@@ -50,7 +49,7 @@ session_start();
                 ]);  
         var options = {  
                 title: '',  
-                //is3D:true,  
+                // is3D:true,  
                 pieHole: 0.4  
                 };  
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));  
@@ -68,6 +67,7 @@ session_start();
   <tr>
       <th>Symbol</th>
       <th>Price</th>
+      <th>Current Value</th>
   </tr>
   <tbody>
 <?php
@@ -79,24 +79,27 @@ $sql = "SELECT ticker FROM stocks WHERE user_id = $id";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
-  // Step 2: For each stock symbol, make a request to the IEX Cloud API to retrieve its latest price
+  // For each stock symbol, make a request to the IEX Cloud API to retrieve its latest price
   while ($row = mysqli_fetch_assoc($result)) {
     $symbol = $row['ticker'];
+    $shares = $row['share_num'];
     $apiKey = 'pk_4d0ca80ec38a41848be36a8ae380a17b'; // Replace with your IEX Cloud API key
     $apiUrl = "https://cloud.iexapis.com/stable/stock/{$symbol}/quote/latestPrice?token={$apiKey}";
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $apiUrl);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($ch);
+    $price = curl_exec($ch);
     curl_close($ch);
+    $current_total = (float)$price * (int)$shares;
 
-    // Step 3: Print out the stock symbol and its latest price
-    if ($response == true) {
+    // Print out the stock symbol and its latest price
+    if ($price == true) {
     ?>
       <tr>
           <td><?php echo $symbol?></td>
-          <td><?php echo $response?></td>
+          <td><?php echo $price?></td>
+          <td><?php echo $shares?></td>
       </tr>
     <?php
     } 
