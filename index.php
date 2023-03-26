@@ -75,7 +75,7 @@ if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "SELECT ticker FROM stocks WHERE user_id = $id";
+$sql = "SELECT ticker, share_num FROM stocks WHERE user_id = $id";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
@@ -92,6 +92,7 @@ if (mysqli_num_rows($result) > 0) {
     $price = curl_exec($ch);
     curl_close($ch);
     $current_total = (float)$price * (int)$shares;
+    $total_round = round($current_total, 2);
 
     // Print out the stock symbol and its latest price
     if ($price == true) {
@@ -99,7 +100,7 @@ if (mysqli_num_rows($result) > 0) {
       <tr>
           <td><?php echo $symbol?></td>
           <td><?php echo $price?></td>
-          <td><?php echo $shares?></td>
+          <td><?php echo $total_round?></td>
       </tr>
     <?php
     } 
