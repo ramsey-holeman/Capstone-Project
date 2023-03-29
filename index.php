@@ -28,12 +28,21 @@ session_start();
   </header>
 </head>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio Dashboard</title>
-    <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>  
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>   
+</head>
+<body>
+    <h1>Portfolio Dashboard</h1>
+    <h4>Hello, <?php echo $user_data['first_name']; echo " "; echo $user_data['last_name']; ?>! Welcome back!</h4>
+
+
+
+
+    
     <script type="text/javascript">
     google.charts.load('current', {'packages':['corechart']});  
     google.charts.setOnLoadCallback(drawChart);  
@@ -56,11 +65,7 @@ session_start();
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));  
         chart.draw(data, options);  
     }  
-    </script>  
-</head>
-<body>
-    <h1>Portfolio Dashboard</h1>
-    <h4>Hello, <?php echo $user_data['first_name']; echo " "; echo $user_data['last_name']; ?>! Welcome back!</h4>
+    </script> 
     
     <h6 style="text-align:center">Stocks In Your Portfolio</h6>
     <div id="piechart" class="chartClass"></div>
@@ -69,6 +74,7 @@ session_start();
       <th>Symbol</th>
       <th>Price</th>
       <th>Current Value</th>
+      <th>Profit/Lost</th>
   </tr>
   <tbody>
 <?php
@@ -76,7 +82,7 @@ if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
 
-$sql = "SELECT ticker, share_num FROM stocks WHERE user_id = $id";
+$sql = "SELECT ticker, share_num, cost FROM stocks WHERE user_id = $id";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
@@ -84,6 +90,7 @@ if (mysqli_num_rows($result) > 0) {
   while ($row = mysqli_fetch_assoc($result)) {
     $symbol = $row['ticker'];
     $shares = $row['share_num'];
+    $cost = $row['cost'];
     $apiKey = 'pk_4d0ca80ec38a41848be36a8ae380a17b'; // Replace with your IEX Cloud API key
     $apiUrl = "https://cloud.iexapis.com/stable/stock/{$symbol}/quote/latestPrice?token={$apiKey}";
 
@@ -92,8 +99,17 @@ if (mysqli_num_rows($result) > 0) {
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $price = curl_exec($ch);
     curl_close($ch);
+
+    // Shares * current stock price
     $current_total = (float)$price * (int)$shares;
     $total_round = round($current_total, 2);
+
+    // Shares * avg cost per share
+    $total_cost = (float)$cost * (int)$shares;
+    $cost_round = round($total_cost, 2);
+    
+    // Current P&L
+    $current_pl = $total_round - $cost_round;
 
     // Print out the stock symbol and its latest price
     if ($price == true) {
@@ -102,6 +118,16 @@ if (mysqli_num_rows($result) > 0) {
           <td><?php echo $symbol?></td>
           <td><?php echo $price?></td>
           <td><?php echo $total_round?></td>
+          <?php
+            if($current_pl > 0)
+            {
+                echo "<td style='background-color:green;'>" . $current_pl . "</td>";
+            }
+            else
+            {
+              echo "<td style='background-color:red;'>" . "(" . $current_pl . ")" . "</td>";
+            }
+        ?>
       </tr>
     <?php
     } 
