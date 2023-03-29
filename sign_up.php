@@ -42,6 +42,7 @@ session_start();
           <ul class="navbar">
               <a href="index.php">Dashboard</a>
               <a href="portfolio_edit.php">Edit Portfolio</a>
+              <a href="options.php">Stock Options Positions</a>
               <a href="login_page.php">Login</a><br>
               <a href="logout.php">Logout</a>
           </ul>

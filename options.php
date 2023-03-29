@@ -33,9 +33,9 @@ session_start();
     <link rel="stylesheet" href="skeleton.css">
 </head>
 <body>
-    <h2>Add Stocks</h2>
+    <h2>Options Positions</h2>
     <div>
-    <p>Here you can add stocks that are in your portfolio</p>
+    <p></p>
 
     <?php
     // Adds the user inputted stock information to the database
