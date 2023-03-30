@@ -46,35 +46,36 @@ session_start();
         $shares = $_POST['con_num'];
         $cost = $_POST['cost'];
         $date = $_POST['date'];
+        $call_put = $_POST['call_put'];
 
         //Makes the ticker uppercase
         $stock = strtoupper($stock);
      
         // If statement works only if a certain button is pressed
         if(isset($_POST['buy_stock'])) {
-            if(!empty($stock) && !empty($shares) && !empty($cost) && !empty($date)){
+            if(!empty($stock) && !empty($shares) && !empty($cost) && !empty($date) && !empty($call_put)){
                 $id = $_SESSION['user_id'];
-                $check_stock = "select * from stocks where ticker='$stock' and user_id='$id' limit 1";
+                $check_stock = "SELECT * FROM options WHERE ticker='$stock' AND user_id='$id' LIMIT 1";
                 $result = mysqli_query($conn, $check_stock);
                 // If not found save to database
                 if ($result->num_rows == 0){
                     $id = $_SESSION['user_id'];
-                    $sql = "insert into stocks (user_id,ticker,con_num,cost,date) values('$id', '$stock', '$shares', '$cost', '$date')";
+                    $sql = "INSERT INTO options (user_id,ticker,contract_num,cost,call_put,date) VALUES('$id', '$stock', '$shares', '$cost', '$call_put', '$date')";
                     mysqli_query($conn, $sql);
                     echo "Position added successfully. You have bought $shares shares of $stock";
-                    header("Location: portfolio_edit.php");
+                    header("Location: options.php");
                     exit();
                 }
                 else{
                     $id = $_SESSION['user_id'];
-                    $sql = "UPDATE stocks SET con_num = con_num + ? WHERE ticker = ? AND user_id = ?";
+                    $sql = "UPDATE options SET contract_num = contract_num + ? WHERE ticker = ? AND user_id = ?";
                     $stmt = mysqli_prepare($conn, $sql);
                     mysqli_stmt_bind_param($stmt, 'isi', $shares, $stock, $id);
                     mysqli_stmt_execute($stmt);
                     
                     //Add and average cost function
                     echo "Position updated successfully. You have bought $shares shares of $stock";
-                    header("Location: portfolio_edit.php");
+                    header("Location: options.php");
                     exit();
                 }
         
@@ -104,7 +105,7 @@ session_start();
                     // }
                     
                     echo "Position updated successfully. You have sold $shares shares of $stock";
-                    header("Location: portfolio_edit.php");
+                    header("Location: options.php");
                     exit();
                 }
                 else{
@@ -126,14 +127,23 @@ session_start();
         <label for="con_num">Number of Contracts:</label>
         <input type="text" id="con_num" name="con_num"><br>
 
-        <label for="cost">Average cost per share:</label>
+        <label for="cost">Average Contract Price:</label>
         <input type="number" name="cost" id="cost" step=any><br>
+
+        <label for="call_put">Call or Put:</label><br>
+        <input type="radio" id="call" name="call_put" value="Call">
+        <label for="call">Call</label><br>
+        <input type="radio" id="put" name="call_put" value="Put">
+        <label for="put">Put</label><br>
 
         <label for="date">Date of Transaction:</label>
         <input type="date" name="date" id="date"><br>
 
+        <label for="exp_date">Expiration Date:</label>
+        <input type="date" name="exp_date" id="exp_date"><br>
+
         <input type="submit" name="buy_stock" value="Buy"><br>
-        <input type="submit" name="sell_stock" value="Sell"><br>
+        <!-- <input type="submit" name="sell_stock" value="Sell"><br> -->
     </form>
     </div>
     <div>
@@ -142,19 +152,19 @@ session_start();
             <thead>
                 <tr>
                     <td>Stock Ticker</td>
-                    <td>Number of Shares</td>
+                    <td>Number of Contract</td>
                     <td>Average Cost</td>
                 </tr>
             </thead>
             <tbody>
                 <?php
                     $id = $_SESSION['user_id'];
-                    $results = mysqli_query($conn, "SELECT * FROM stocks WHERE user_id = $id");
+                    $results = mysqli_query($conn, "SELECT * FROM options WHERE user_id = $id");
                     while($row = mysqli_fetch_array($results)) {
                     ?>
                         <tr>
                             <td><?php echo $row['ticker']?></td>
-                            <td><?php echo $row['con_num']?></td>
+                            <td><?php echo $row['contract_num']?></td>
                             <td><?php echo $row['cost']?></td>
                         </tr>
 
@@ -166,4 +176,4 @@ session_start();
         </table>
     </div>
 </body>
-</html>
+</call>

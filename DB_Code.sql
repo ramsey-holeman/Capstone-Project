@@ -7,7 +7,7 @@ CREATE TABLE `stocks` (
   `user_id` bigint(20) NOT NULL,
   `ticker` varchar(8) NOT NULL,
   `share_num` int(255) NOT NULL,
-  `cost` decimal(5,2) NOT NULL,
+  `cost` decimal(10,2) NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
