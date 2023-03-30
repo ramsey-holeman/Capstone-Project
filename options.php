@@ -43,7 +43,7 @@ session_start();
         // something was posted
         // Collect information from form
         $stock = $_POST['ticker'];
-        $shares = $_POST['share_num'];
+        $shares = $_POST['con_num'];
         $cost = $_POST['cost'];
         $date = $_POST['date'];
 
@@ -59,7 +59,7 @@ session_start();
                 // If not found save to database
                 if ($result->num_rows == 0){
                     $id = $_SESSION['user_id'];
-                    $sql = "insert into stocks (user_id,ticker,share_num,cost,date) values('$id', '$stock', '$shares', '$cost', '$date')";
+                    $sql = "insert into stocks (user_id,ticker,con_num,cost,date) values('$id', '$stock', '$shares', '$cost', '$date')";
                     mysqli_query($conn, $sql);
                     echo "Position added successfully. You have bought $shares shares of $stock";
                     header("Location: portfolio_edit.php");
@@ -67,7 +67,7 @@ session_start();
                 }
                 else{
                     $id = $_SESSION['user_id'];
-                    $sql = "UPDATE stocks SET share_num = share_num + ? WHERE ticker = ? AND user_id = ?";
+                    $sql = "UPDATE stocks SET con_num = con_num + ? WHERE ticker = ? AND user_id = ?";
                     $stmt = mysqli_prepare($conn, $sql);
                     mysqli_stmt_bind_param($stmt, 'isi', $shares, $stock, $id);
                     mysqli_stmt_execute($stmt);
@@ -91,7 +91,7 @@ session_start();
                 // Checks if stock is in the database
                 if ($result->num_rows == 1){
                     $id = $_SESSION['user_id'];
-                    $sql = "UPDATE stocks SET share_num = share_num - ? WHERE ticker = ? AND user_id = ?";
+                    $sql = "UPDATE stocks SET con_num = con_num - ? WHERE ticker = ? AND user_id = ?";
                     $stmt = mysqli_prepare($conn, $sql);
                     mysqli_stmt_bind_param($stmt, 'isi', $shares, $stock, $id);
                     mysqli_stmt_execute($stmt);
@@ -123,8 +123,8 @@ session_start();
         <label for="ticker">Stock Ticker:</label>
         <input style="text-transform: uppercase;" type="text" name="ticker" id="ticker" style="text-transform:uppercase"><br>
         
-        <label for="share_num">Number of Shares:</label>
-        <input type="text" id="share_num" name="share_num"><br>
+        <label for="con_num">Number of Contracts:</label>
+        <input type="text" id="con_num" name="con_num"><br>
 
         <label for="cost">Average cost per share:</label>
         <input type="number" name="cost" id="cost" step=any><br>
@@ -154,7 +154,7 @@ session_start();
                     ?>
                         <tr>
                             <td><?php echo $row['ticker']?></td>
-                            <td><?php echo $row['share_num']?></td>
+                            <td><?php echo $row['con_num']?></td>
                             <td><?php echo $row['cost']?></td>
                         </tr>
 
