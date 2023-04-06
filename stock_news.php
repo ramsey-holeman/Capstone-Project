@@ -73,7 +73,7 @@ session_start();
         foreach ($json as $article) {
             echo "<h3>" . $article["title"] . "</h3>";
             echo "<p>" . $article["text"] . "</p>";
-            echo "<p><a href=\"" . $article["url"] . "\">Read more</a></p>";
+            echo "<p><a href='{$article["url"]}' target='_blank'>Read more</a></p>";
             echo "<hr>";
             $count++;
 
