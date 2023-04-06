@@ -18,8 +18,8 @@ session_start();
                 <a href="index.php">Dashboard</a>
                 <a href="portfolio_edit.php">Edit Portfolio</a>
                 <a href="options.php">Stock Options</a>
+                <a href="screener.php">Stock Screener</a>
                 <a href="stock_news.php">News</a>
-                <a href="login_page.php">Login</a><br>
                 <a href="logout.php">Logout</a>
             </ul>
         </nav>
@@ -35,7 +35,7 @@ session_start();
   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>   
 </head>
 <body>
-  <h1>Stock News</h1>
+  <h1 style="text-align: center;">Stock News</h1>
 
   <p style="text-align: center;">Enter your desired ticker below</p>
     <form action="stock_news.php" method="POST">
@@ -49,24 +49,22 @@ session_start();
     </form>
 <?php
   if(array_key_exists("ticker", $_POST)) {
-    // Set the API key
+    // API key
     $api_key = "6efc26598c705a46c16082b0640c7c0f";
-    // Set the stock ticker to search for
+    // stock ticker to search for
     $ticker = $_POST['ticker'];
-    // Set the maximum number of articles to display
+    // maximum number of articles to display
     $max_articles = $_POST['num_news'];
 
     // Set the counter variable to zero
     $count = 0;
 
-    // Loop until the counter is less than the maximum number of articles
+    // Loop until the counter is greater than the max articles
     while ($count < $max_articles) {
 
-        // Make the API request
+        // API request
         $request_url = "https://financialmodelingprep.com/api/v3/stock_news?tickers=$ticker&apikey=$api_key";
         $response = file_get_contents($request_url);
-
-        // Decode the JSON response
         $json = json_decode($response, true);
 
         // Iterate over the news articles and display them
@@ -82,12 +80,12 @@ session_start();
                 break 2;
             }
         }
-
         // Wait for 1 second before making the next API request
         sleep(1);
     }
 }else{
-  $ticker = null;  // no color given; default to red
+  // If ticker array is not set then make it null
+  $ticker = null;
 }
 ?>
   
