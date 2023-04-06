@@ -43,6 +43,7 @@
                 <a href="index.php">Dashboard</a>
                 <a href="portfolio_edit.php">Edit Portfolio</a>
                 <a href="options.php">Stock Options</a>
+                <a href="stock_news.php">News</a>
                 <a href="login_page.php">Login</a><br>
                 <a href="logout.php">Logout</a>
             </ul>
