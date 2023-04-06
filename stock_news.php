@@ -48,15 +48,20 @@ session_start();
       <input type="submit" value="Search">
     </form>
   <?php
+  if(isset($_POST['ticker'])){
   $apiKey = '6efc26598c705a46c16082b0640c7c0f';
   $searchTerm = '' . $_POST['ticker'];
-  $limit = 0 + $_POST['num_news'];
-  
+  $limit = $_POST['num_news'];
+  }
+  else{
+    $searchTerm = null;
+    $limit = 0;
+  }
   // Initialize variables
   $count = 0;
   
   // Loop through the pages of results until the limit is reached or all results are fetched
-  while ($count < $limit) {
+  while ($count <= $_POST['num_news']){
     // Build the API URL for the current page of results
     $url = "https://financialmodelingprep.com/api/v3/stock_news?tickers=$searchTerm&page=0&apikey=$apiKey";
     
@@ -71,7 +76,7 @@ session_start();
       // Print the title and summary
       echo "<h2>{$article['title']}</h2>";
       echo "<p>{$article['text']}</p>";
-      echo "<a href='article['URL']'>Click here for the full article</a>";
+      echo "<a href='{$article['url']}'>Click here for the article</a>";
       
       // Increment the count of articles displayed
       $count++;
