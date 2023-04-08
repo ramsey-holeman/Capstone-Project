@@ -30,24 +30,64 @@ session_start();
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio Dashboard</title>
+  <title>Stock Screener</title>
   <link rel="stylesheet" href="style.css">  
 </head>
 <body>
-<?php
-    $apiKey = '6efc26598c705a46c16082b0640c7c0f';
-    $url = "https://financialmodelingprep.com/api/v3/stock-screener?marketCapMoreThan=1000000000&betaMoreThan=1&dividendYieldMoreThan=2&volumeMoreThan=1000000&sector=Technology&exchange=NASDAQ&apikey=$apiKey";
-    
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($ch);
-    curl_close($ch);
+  <h1>Stock Screener</h1>
+  <form action="" method="POST">
+    <label for="max_cap">Market cap greater than</label>
+    <input type="number" name="max_cap" id="max_cap">
 
-    $data = json_decode($response, true);
+    <label for="min_cap">Market cap less than</label>
+    <input type="number" name="min_cap" id="min_cap">
 
-    // do something with the data here
-    foreach ($data as $stock) {
-        echo $stock['symbol'] . ' - ' . $stock['companyName'] . ' - ' . $stock['marketCap'] . '<br>';
-    }
-?>
+    <label for="max_price">Share price greater than</label>
+    <input type="number" name="max_price" id="max_price">
+
+    <label for="min_price">Share price less than</label>
+    <input type="number" name="min_price" id="min_price">
+
+    <label for="max_vol">Stock volume greater than</label>
+    <input type="number" name="max_vol" id="max_vol">
+
+    <label for="min_vol">Stock volume less than</label>
+    <input type="number" name="min_vol" id="min_vol">
+
+    <label for="sector">Company Sector</label>
+    <select name = "sector">
+        <option disabled selected value> -- select an option -- </option>
+        <?php 
+        $select = "SELECT * FROM majors";
+        $result = mysqli_query($conn, $select);
+        while ($row = mysqli_fetch_array($result)) {
+          echo '<option>'.$row['majors'].'</option>';
+        }
+        ?>
+    </select><br><br>
+
+    <label for="industry">Company Industry</label>
+
+    <label for="exchange">Exchange</label>
+
+
+    <input type="submit" value="Search">
+
+  </form>
+  <?php
+      $apiKey = '6efc26598c705a46c16082b0640c7c0f';
+      $url = "https://financialmodelingprep.com/api/v3/stock-screener?marketCapMoreThan=1000000000&betaMoreThan=1&dividendYieldMoreThan=2&volumeMoreThan=1000000&sector=Technology&exchange=NASDAQ&apikey=$apiKey";
+      
+      $ch = curl_init($url);
+      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+      $response = curl_exec($ch);
+      curl_close($ch);
+
+      $data = json_decode($response, true);
+
+      // do something with the data here
+      foreach ($data as $stock) {
+          echo $stock['symbol'] . ' - ' . $stock['companyName'] . ' - ' . $stock['marketCap'] . '<br>';
+      }
+  ?>
 </body>
