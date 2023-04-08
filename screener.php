@@ -35,6 +35,7 @@ session_start();
 </head>
 <body>
   <h1>Stock Screener</h1>
+  <p>Enter parameters below to screen for stocks</p>
   <form action="" method="POST">
     <label for="max_cap">Market cap greater than</label>
     <input type="number" name="max_cap" id="max_cap">
@@ -58,18 +59,37 @@ session_start();
     <select name = "sector">
         <option disabled selected value> -- select an option -- </option>
         <?php 
-        $select = "SELECT * FROM majors";
+        $select = "SELECT * FROM sector";
         $result = mysqli_query($conn, $select);
         while ($row = mysqli_fetch_array($result)) {
-          echo '<option>'.$row['majors'].'</option>';
+          echo '<option>'.$row['sector'].'</option>';
         }
         ?>
     </select><br><br>
 
     <label for="industry">Company Industry</label>
+    <select name = "industry">
+        <option disabled selected value> -- select an option -- </option>
+        <?php 
+        $select = "SELECT * FROM industry";
+        $result = mysqli_query($conn, $select);
+        while ($row = mysqli_fetch_array($result)) {
+          echo '<option>'.$row['industry'].'</option>';
+        }
+        ?>
+    </select><br><br>
 
     <label for="exchange">Exchange</label>
-
+    <select name = "exchange">
+        <option disabled selected value> -- select an option -- </option>
+        <?php 
+        $select = "SELECT * FROM exchange";
+        $result = mysqli_query($conn, $select);
+        while ($row = mysqli_fetch_array($result)) {
+          echo '<option>'.$row['exchange'].'</option>';
+        }
+        ?>
+    </select><br><br>
 
     <input type="submit" value="Search">
 
