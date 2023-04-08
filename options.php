@@ -152,9 +152,9 @@ session_start();
         <table style="margin: auto">
             <thead>
                 <tr>
-                    <td>Stock Ticker</td>
-                    <td>Number of Contract</td>
-                    <td>Average Cost</td>
+                    <th>Stock Ticker</th>
+                    <th>Number of Contract</th>
+                    <th>Average Cost</th>
                 </tr>
             </thead>
             <tbody>
