@@ -65,7 +65,7 @@ session_start();
           echo '<option>'.$row['sector'].'</option>';
         }
         ?>
-    </select><br><br>
+    </select><br>
 
     <label for="industry">Company Industry</label>
     <select name = "industry">
@@ -77,7 +77,7 @@ session_start();
           echo '<option>'.$row['industry'].'</option>';
         }
         ?>
-    </select><br><br>
+    </select><br>
 
     <label for="exchange">Exchange</label>
     <select name = "exchange">
@@ -89,14 +89,29 @@ session_start();
           echo '<option>'.$row['exchange'].'</option>';
         }
         ?>
-    </select><br><br>
+    </select><br>
+
+    <label for="limit">Max number of results</label>
+    <input type="number" name="limit" id="limit">
 
     <input type="submit" value="Search">
 
   </form>
   <?php
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+      $max_cap = $_POST["max_cap"];
+      $min_cap = $_POST["min_cap"];
+      $max_price = $_POST["max_price"];
+      $min_price = $_POST["min_price"];
+      $max_vol = $_POST["max_vol"];
+      $min_vol = $_POST["min_vol"];
+      $sector = $_POST["sector"];
+      $industry = $_POST["industry"];
+      $exchange = $_POST["exchange"];
+      $limit = $_POST["limit"];
+
       $apiKey = '6efc26598c705a46c16082b0640c7c0f';
-      $url = "https://financialmodelingprep.com/api/v3/stock-screener?marketCapMoreThan=1000000000&betaMoreThan=1&dividendYieldMoreThan=2&volumeMoreThan=1000000&sector=Technology&exchange=NASDAQ&apikey=$apiKey";
+      $url = "https://financialmodelingprep.com/api/v3/stock-screener?marketCapMoreThan=$max_cap&marketCapLessThan=&$min_cap&priceMoreThan=$max_price&priceLessThan=$min_price&volumeMoreThan=$max_vol&volumeLessThan=$min_vol&sector=$sector&industry=$industry&exchange=$exchange&limit=$limit&apikey=$apiKey";
       
       $ch = curl_init($url);
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -104,10 +119,33 @@ session_start();
       curl_close($ch);
 
       $data = json_decode($response, true);
-
-      // do something with the data here
-      foreach ($data as $stock) {
-          echo $stock['symbol'] . ' - ' . $stock['companyName'] . ' - ' . $stock['marketCap'] . '<br>';
-      }
   ?>
+  <table>
+    <thead>
+      <tr>
+        <th>Symbol</th>
+        <th>Company Name</th>
+        <th>Market Cap</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+    <tbody>      
+      <?php
+      // Loop through the results of the form submission
+      foreach ($data as $stock) {
+        $marketCap = number_format($stock['marketCap']);
+        $price = round(2, $stock['price']);
+      ?>
+      <tr>
+        <td><?php echo $stock['symbol']; ?></td>
+        <td><?php echo $stock['companyName']; ?></td>
+        <td><?php echo $marketCap; ?></td>
+        <td><?php echo $stock['price']; ?></td>
+      </tr>
+      <?php
+        }
+      }
+      ?>
+    </tbody>
+  </table>
 </body>
