@@ -413,8 +413,8 @@ td:last-child {
   padding-right: 0; }
 
 tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
+  background-color: #4b4a4a; }
+
 /* Spacing
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 button,

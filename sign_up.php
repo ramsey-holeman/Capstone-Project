@@ -42,6 +42,8 @@ session_start();
           <ul class="navbar">
               <a href="index.php">Dashboard</a>
               <a href="portfolio_edit.php">Edit Portfolio</a>
+              <a href="options.php">Stock Options</a>
+              <a href="stock_news.php">News</a>
               <a href="login_page.php">Login</a><br>
               <a href="logout.php">Logout</a>
           </ul>
@@ -49,10 +51,10 @@ session_start();
   </div>  
 </head>
 <body>
-<h2>Sign Up Page</h2>
+<h2 style="text-align: center;">Sign Up Page</h2>
 <br>
 <div>
-  <form action="" method="post" autocomplete="off">
+  <form action="" method="post" autocomplete="off" style="text-align: center">
     <label for="fname">First Name:</label>
     <input type="text" name="fname" id="fname" required><br><br>
 
