@@ -35,8 +35,11 @@ session_start();
 </head>
 <body>
     <h1>Watch List</h1>
-    <p style="text-align: center;">Enter the stock you want to add to your watch list</p>
-
+    <p style="text-align: center;">Enter the stock you want to add to your watch list:</p>
+    <form action="watchlist.php" method="post">
+        <input type="text" name="list" id="list">
+        <input type="submit" name="save" value="Save">
+    </form>
     <?php
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $ticker = $_POST['list'];
@@ -45,42 +48,16 @@ session_start();
             if(!empty($ticker)){
                 $sql = "INSERT INTO watchlist (user_id,ticker) VALUES ('$id','$ticker')";
                 mysqli_query($conn, $sql);
-                echo "$ticker has been added to your watchlist successfully.";
+                echo "<p style='text-align: center;'>$ticker has been added to your watchlist successfully.</p>";
             }
             else {
-                echo "Error: Please add a ticker in the text box";
+                echo "<p style='text-align: center;'>Error: Please add a ticker in the text box</p>";
             }
         }
         else {
-            echo "Error adding $ticker to watchlist";
+            echo "<p style='text-align: center;'>Error adding $ticker to watchlist</p>";
         }
     }
-    ?>
-    <form action="watchlist.php" method="post">
-        <label for="list">Watch List:</label><br>
-        <input type="text" name="list" id="list">
-
-        <input type="submit" name="save" value="Save">
-    </form>
-    <?php
-    // // Your API key
-    // $api_key = "6efc26598c705a46c16082b0640c7c0f";
-
-    // // Ticker symbol to search
-    // $ticker = $_POST['list'];
-
-    // // API endpoint
-    // $url = "https://financialmodelingprep.com/api/v3/quote/{$ticker}?apikey={$api_key}";
-
-    // // Send request to the API
-    // $response = file_get_contents($url);
-
-    // // Decode JSON response into an array
-    // $data = json_decode($response, true);
-    
-    // // Print the current price of the stock
-    // echo "Current Price: " . $data[0]['price'] . "\n";
-    $user_db = mysqli_query($conn, "SELECT * FROM stocks WHERE user_id = $id");
     ?>
     <div>
         <p></p>
@@ -88,7 +65,9 @@ session_start();
             <thead>
                 <tr>
                     <td>Stock Ticker</td>
+                    <td>Company Name</td>
                     <td>Current Price</td>
+                    <td>Delete</td>
                 </tr>
             </thead>
             <tbody>
@@ -100,7 +79,7 @@ session_start();
                         $api_key = "6efc26598c705a46c16082b0640c7c0f";
 
                         // API endpoint
-                        $url = "https://financialmodelingprep.com/api/v3/quote/{$ticker}?apikey={$api_key}";
+                        $url = "https://financialmodelingprep.com/api/v3/quote/{$row['ticker']}?apikey={$api_key}";
 
                         // Send request to the API
                         $response = file_get_contents($url);
@@ -112,9 +91,10 @@ session_start();
                         echo "Current Price: " . $data[0]['price'] . "\n";
                     ?>
                         <tr>
-                            <td><?php echo $row['ticker']?></td>
-                            <td><?php echo $row['share_num']?></td>
-                            <td><?php echo $row['cost']?></td>
+                            <td><?php echo $data[0]['symbol']?></td>
+                            <td><?php echo $data[0]['name']?></td>
+                            <td><?php echo $data[0]['price']?></td>
+                            <td><a href=""></a></td>
                         </tr>
 
                     <?php
