@@ -48,7 +48,9 @@ session_start();
             if(!empty($ticker)){
                 $sql = "INSERT INTO watchlist (user_id,ticker) VALUES ('$id','$ticker')";
                 mysqli_query($conn, $sql);
+                header("location: watchlist.php");
                 echo "<p style='text-align: center;'>$ticker has been added to your watchlist successfully.</p>";
+                exit();
             }
             else {
                 echo "<p style='text-align: center;'>Error: Please add a ticker in the text box</p>";
@@ -77,26 +79,23 @@ session_start();
                     while($row = mysqli_fetch_array($results)) {
                         // API key
                         $api_key = "6efc26598c705a46c16082b0640c7c0f";
+                        $ticker = $row['ticker'];
 
                         // API endpoint
-                        $url = "https://financialmodelingprep.com/api/v3/quote/{$row['ticker']}?apikey={$api_key}";
+                        $url = "https://financialmodelingprep.com/api/v3/quote/{$ticker}?apikey={$api_key}";
 
                         // Send request to the API
                         $response = file_get_contents($url);
 
                         // Decode JSON response into an array
                         $data = json_decode($response, true);
-                        
-                        // Print the current price of the stock
-                        echo "Current Price: " . $data[0]['price'] . "\n";
                     ?>
                         <tr>
                             <td><?php echo $data[0]['symbol']?></td>
                             <td><?php echo $data[0]['name']?></td>
                             <td><?php echo $data[0]['price']?></td>
-                            <td><a href=""></a></td>
+                            <?php echo "<td><a href='delete.php?ticker=$ticker'>Delete $ticker from watchlist</a></td>"?>
                         </tr>
-
                     <?php
                     }
                     mysqli_close($conn);
