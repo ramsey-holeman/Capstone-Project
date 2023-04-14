@@ -62,7 +62,6 @@ session_start();
       }
     }
   echo "</marquee>";
-  mysqli_close($conn);
 ?>
 <body>
     <h1>Portfolio Dashboard</h1>
