@@ -460,10 +460,10 @@ hr {
 
 .watchlistMarquee {
   font-family:Helvetica, sans-serif;
-  font-size:2em;
-  line-height:1.3em;
-  color:#996600;
-  background-color:#FFFFCC;
+  font-size:1em;
+  /* line-height:1em; */
+  color:#ffffff;
+  /* background-color:#222; */
   padding:1.5em;}
 
 

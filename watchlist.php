@@ -93,7 +93,7 @@ session_start();
                         <tr>
                             <td><?php echo $data[0]['symbol']?></td>
                             <td><?php echo $data[0]['name']?></td>
-                            <td><?php echo $data[0]['price']?></td>
+                            <td><?php echo round($data[0]['price'], 2)?></td>
                             <?php echo "<td><a href='delete.php?ticker=$ticker'>Delete $ticker from watchlist</a></td>"?>
                         </tr>
                     <?php

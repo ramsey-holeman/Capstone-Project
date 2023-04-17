@@ -1,3 +1,4 @@
+<?php error_reporting(0); ?> 
 <?php
 session_start();
   include "db_connect.php";
@@ -37,25 +38,25 @@ session_start();
   <h1>Stock Screener</h1>
   <p>Enter parameters below to screen for stocks</p>
   <form action="" method="POST">
-    <label for="max_cap">Market cap greater than</label>
+    <label for="max_cap">Market cap greater than:</label>
     <input type="number" name="max_cap" id="max_cap">
 
-    <label for="min_cap">Market cap less than</label>
+    <label for="min_cap">Market cap less than:</label>
     <input type="number" name="min_cap" id="min_cap">
 
-    <label for="max_price">Share price greater than</label>
-    <input type="number" name="max_price" id="max_price">
+    <label for="max_price">Share price greater than:</label>
+    <input type="number" name="max_price" id="max_price"><br>
 
-    <label for="min_price">Share price less than</label>
+    <label for="min_price">Share price less than:</label>
     <input type="number" name="min_price" id="min_price">
 
-    <label for="max_vol">Stock volume greater than</label>
+    <label for="max_vol">Stock volume greater than:</label>
     <input type="number" name="max_vol" id="max_vol">
 
-    <label for="min_vol">Stock volume less than</label>
-    <input type="number" name="min_vol" id="min_vol">
+    <label for="min_vol">Stock volume less than:</label>
+    <input type="number" name="min_vol" id="min_vol"><br>
 
-    <label for="sector">Company Sector</label>
+    <label for="sector">Company Sector:</label>
     <select name = "sector">
         <option disabled selected value> -- select an option -- </option>
         <?php 
@@ -65,9 +66,9 @@ session_start();
           echo '<option>'.$row['sector'].'</option>';
         }
         ?>
-    </select><br>
+    </select>
 
-    <label for="industry">Company Industry</label>
+    <label for="industry">Company Industry:</label>
     <select name = "industry">
         <option disabled selected value> -- select an option -- </option>
         <?php 
@@ -77,9 +78,9 @@ session_start();
           echo '<option>'.$row['industry'].'</option>';
         }
         ?>
-    </select><br>
+    </select>
 
-    <label for="exchange">Exchange</label>
+    <label for="exchange">Exchange:</label>
     <select name = "exchange">
         <option disabled selected value> -- select an option -- </option>
         <?php 
@@ -91,8 +92,8 @@ session_start();
         ?>
     </select><br>
 
-    <label for="limit">Max number of results</label>
-    <input type="number" name="limit" id="limit">
+    <label for="limit">Max number of results:</label>
+    <input type="number" name="limit" id="limit" required>
 
     <input type="submit" value="Search">
 
