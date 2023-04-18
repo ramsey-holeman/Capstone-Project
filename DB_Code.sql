@@ -97,6 +97,22 @@ INSERT INTO `stocks` (`id`, `user_id`, `ticker`, `share_num`, `cost`, `date`) VA
 
 -- --------------------------------------------------------
 
+-- Table structure for table `options`
+--
+
+CREATE TABLE `options` (
+  `id` int(200) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `ticker` varchar(8) NOT NULL,
+  `con_num` int(255) NOT NULL,
+  `call_put` varchar(8) NOT NULL,
+  `cost` decimal(10,2) NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
+-- --------------------------------------------------------
+
 -- Table structure for table `users`
 --
 

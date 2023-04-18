@@ -84,9 +84,8 @@ session_start();
             }
         }
         if(isset($_POST['sell_stock'])) {
-           
             if(!empty($stock) && !empty($shares) && !empty($cost) && !empty($date)){
-                
+
                 $check_stock = "select * from stocks where ticker='$stock' limit 1";
                 $result = mysqli_query($conn, $check_stock);
                 // Checks if stock is in the database
@@ -97,7 +96,7 @@ session_start();
                     mysqli_stmt_bind_param($stmt, 'isi', $shares, $stock, $id);
                     mysqli_stmt_execute($stmt);
                     
-                    // Your SQL query to delete the row
+                    // SQL query to delete the row
                     $sql = "DELETE FROM stocks WHERE share_num <= 0";
 
                     if ($conn->query($sql) === TRUE) {
@@ -105,7 +104,6 @@ session_start();
                     } else {
                     echo "Error deleting row(s): " . $conn->error;
                     }
-
                     $conn->close();
                     
                     echo "Position updated successfully. You have sold $shares shares of $stock";
