@@ -114,17 +114,20 @@ if (mysqli_num_rows($result) > 0) {
     $symbol = $row['ticker'];
     $shares = $row['share_num'];
     $cost = $row['cost'];
-    $apiKey = 'pk_4d0ca80ec38a41848be36a8ae380a17b'; // Replace with your IEX Cloud API key
-    $apiUrl = "https://cloud.iexapis.com/stable/stock/{$symbol}/quote/latestPrice?token={$apiKey}";
 
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $apiUrl);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $price = curl_exec($ch);
-    curl_close($ch);
+    // API key
+    $api_key = "6efc26598c705a46c16082b0640c7c0f";
+    // API endpoint
+    $url = "https://financialmodelingprep.com/api/v3/quote/{$symbol}?apikey={$api_key}";
+
+    // Send request to the API
+    $response = file_get_contents($url);
+
+    // Decode JSON response into an array
+    $data = json_decode($response, true);
 
     // Shares * current stock price
-    $current_total = (float)$price * (int)$shares;
+    $current_total = round($data[0]['price'], 2) * (int)$shares;
     $total_round = round($current_total, 2);
 
     // Shares * avg cost per share
@@ -135,11 +138,11 @@ if (mysqli_num_rows($result) > 0) {
     $current_pl = $total_round - $cost_round;
 
     // Print out the stock symbol and its latest price
-    if ($price == true) {
+    if (round($data[0]['price'], 2) == true) {
     ?>
       <tr>
           <td><?php echo $symbol?></td>
-          <td><?php echo $price?></td>
+          <td><?php echo round($data[0]['price'], 2)?></td>
           <td><?php echo $total_round?></td>
           <?php
             if($current_pl > 0)

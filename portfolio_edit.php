@@ -97,12 +97,16 @@ session_start();
                     mysqli_stmt_bind_param($stmt, 'isi', $shares, $stock, $id);
                     mysqli_stmt_execute($stmt);
                     
-                    // Check if number of shares is equal to zero
-                    // $zero_stock = "select * from stocks where ticker='$stock' limit 1";
-                    // $result = mysqli_query($conn, $zero_stock);
-                    // if ($){
+                    // Your SQL query to delete the row
+                    $sql = "DELETE FROM stocks WHERE share_num <= 0";
 
-                    // }
+                    if ($conn->query($sql) === TRUE) {
+                    echo "Row(s) deleted successfully";
+                    } else {
+                    echo "Error deleting row(s): " . $conn->error;
+                    }
+
+                    $conn->close();
                     
                     echo "Position updated successfully. You have sold $shares shares of $stock";
                     header("Location: portfolio_edit.php");
