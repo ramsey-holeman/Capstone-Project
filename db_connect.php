@@ -28,9 +28,9 @@ if ($conn->connect_error) {
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     } else {
-        echo "Connected successfully with new username and password";
+        // echo "Connected successfully with new username and password";
     }
 } else {
-    echo "Connected successfully with initial username and password";
+    // echo "Connected successfully with initial username and password";
 }
 ?>
