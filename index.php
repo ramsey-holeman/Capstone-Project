@@ -15,6 +15,34 @@ session_start();
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="skeleton.css">
     <div id="wrap">
+    <?php
+  echo "<marquee class='watchlistMarquee' direction='left' scrollamount='8' behavior='scroll'>";
+    $wSQL = "SELECT ticker FROM watchlist WHERE user_id = $id";
+    $watchlist = mysqli_query($conn, $wSQL);
+    echo "Stocks in your watchlist: ";
+    while($row = mysqli_fetch_array($watchlist)){
+      if(!$row){
+        echo "Watchlist is empty, Please go to the watchlist page to enter stocks you want to watch!";
+      }else{
+      // API key
+      $api_key = "6efc26598c705a46c16082b0640c7c0f";
+      $ticker = $row['ticker'];
+
+      // API endpoint
+      $url = "https://financialmodelingprep.com/api/v3/quote/{$ticker}?apikey={$api_key}";
+
+      // Send request to the API
+      $response = file_get_contents($url);
+
+      // Decode JSON response into an array
+      $data = json_decode($response, true);
+
+      // Echo out the response
+      echo $data[0]['symbol'] . ": " . round($data[0]['price'], 2) . ", " . "\n";
+      }
+    }
+  echo "</marquee>";
+  ?>
         <nav>
             <ul class="navbar">
                 <a href="index.php">Dashboard</a>
@@ -38,12 +66,7 @@ session_start();
 </head>
 <body>
     <h1>Portfolio Dashboard</h1>
-    <h4>Hello, <?php echo $user_data['first_name']; echo " "; echo $user_data['last_name']; ?>! Welcome back!</h4>
-
-
-
-
-    
+    <h4>Hello, <?php echo $user_data['first_name']; echo " "; echo $user_data['last_name']; ?>! Welcome back!</h4>    
     <script type="text/javascript">
     google.charts.load('current', {'packages':['corechart']});  
     google.charts.setOnLoadCallback(drawChart);  
@@ -60,7 +83,6 @@ session_start();
                 ]);  
         var options = {  
                 title: '',  
-                // is3D:true,  
                 pieHole: 0.4  
                 };  
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));  
@@ -68,7 +90,7 @@ session_start();
     }  
     </script> 
     
-    <h6 style="text-align:center">Stocks In Your Portfolio</h6>
+    <h6 style="text-align:center">Stocks In Your Portfolio by Share Number</h6>
     <div id="piechart" class="chartClass"></div>
 <table>
   <tr>
@@ -92,17 +114,20 @@ if (mysqli_num_rows($result) > 0) {
     $symbol = $row['ticker'];
     $shares = $row['share_num'];
     $cost = $row['cost'];
-    $apiKey = 'pk_4d0ca80ec38a41848be36a8ae380a17b'; // Replace with your IEX Cloud API key
-    $apiUrl = "https://cloud.iexapis.com/stable/stock/{$symbol}/quote/latestPrice?token={$apiKey}";
 
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $apiUrl);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $price = curl_exec($ch);
-    curl_close($ch);
+    // API key
+    $api_key = "6efc26598c705a46c16082b0640c7c0f";
+    // API endpoint
+    $url = "https://financialmodelingprep.com/api/v3/quote/{$symbol}?apikey={$api_key}";
+
+    // Send request to the API
+    $response = file_get_contents($url);
+
+    // Decode JSON response into an array
+    $data = json_decode($response, true);
 
     // Shares * current stock price
-    $current_total = (float)$price * (int)$shares;
+    $current_total = round($data[0]['price'], 2) * (int)$shares;
     $total_round = round($current_total, 2);
 
     // Shares * avg cost per share
@@ -113,11 +138,11 @@ if (mysqli_num_rows($result) > 0) {
     $current_pl = $total_round - $cost_round;
 
     // Print out the stock symbol and its latest price
-    if ($price == true) {
+    if (round($data[0]['price'], 2) == true) {
     ?>
       <tr>
           <td><?php echo $symbol?></td>
-          <td><?php echo $price?></td>
+          <td><?php echo round($data[0]['price'], 2)?></td>
           <td><?php echo $total_round?></td>
           <?php
             if($current_pl > 0)

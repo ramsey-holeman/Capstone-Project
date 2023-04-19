@@ -7,7 +7,7 @@ session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<title>Dashboard</title>
+<title>Stock News</title>
 <head>    
   <header>
     <link rel="stylesheet" href="normalize.css">

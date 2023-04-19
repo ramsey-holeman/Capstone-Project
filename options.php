@@ -28,7 +28,7 @@ session_start();
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add to Portfolio</title>
+    <title>Options Portfolio</title>
     <!-- <link rel="stylesheet" href="style.css"> -->
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="skeleton.css">
@@ -88,23 +88,26 @@ session_start();
            
             if(!empty($stock) && !empty($shares) && !empty($cost) && !empty($date)){
                 
-                $check_stock = "select * from stocks where ticker='$stock' limit 1";
+                $check_stock = "select * from options where ticker='$stock' limit 1";
                 $result = mysqli_query($conn, $check_stock);
                 // Checks if stock is in the database
                 if ($result->num_rows == 1){
                     $id = $_SESSION['user_id'];
-                    $sql = "UPDATE stocks SET con_num = con_num - ? WHERE ticker = ? AND user_id = ?";
+                    $sql = "UPDATE options SET contract_num = contract_num - ? WHERE ticker = ? AND user_id = ?";
                     $stmt = mysqli_prepare($conn, $sql);
                     mysqli_stmt_bind_param($stmt, 'isi', $shares, $stock, $id);
                     mysqli_stmt_execute($stmt);
-                    
-                    // Check if number of shares is equal to zero
-                    // $zero_stock = "select * from stocks where ticker='$stock' limit 1";
-                    // $result = mysqli_query($conn, $zero_stock);
-                    // if ($){
 
-                    // }
-                    
+                    // Your SQL query to delete the row
+                    $sql = "DELETE FROM options WHERE contract_num <= 0";
+
+                    if ($conn->query($sql) === TRUE) {
+                    echo "Row(s) deleted successfully";
+                    } else {
+                    echo "Error deleting row(s): " . $conn->error;
+                    }
+
+                    $conn->close();
                     echo "Position updated successfully. You have sold $shares shares of $stock";
                     header("Location: options.php");
                     exit();
@@ -144,7 +147,7 @@ session_start();
         <input type="date" name="exp_date" id="exp_date"><br>
 
         <input type="submit" name="buy_stock" value="Buy"><br>
-        <!-- <input type="submit" name="sell_stock" value="Sell"><br> -->
+        <input type="submit" name="sell_stock" value="Sell"><br>
     </form>
     </div>
     <div>
@@ -152,9 +155,9 @@ session_start();
         <table style="margin: auto">
             <thead>
                 <tr>
-                    <td>Stock Ticker</td>
-                    <td>Number of Contract</td>
-                    <td>Average Cost</td>
+                    <th>Stock Ticker</th>
+                    <th>Number of Contract</th>
+                    <th>Average Cost</th>
                 </tr>
             </thead>
             <tbody>

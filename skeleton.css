@@ -450,7 +450,6 @@ form {
 .u-pull-left {
   float: left; }
 
-
 /* Misc
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 hr {
@@ -458,6 +457,14 @@ hr {
   margin-bottom: 3.5rem;
   border-width: 0;
   border-top: 1px solid #E1E1E1; }
+
+.watchlistMarquee {
+  font-family:Helvetica, sans-serif;
+  font-size:1em;
+  /* line-height:1em; */
+  color:#ffffff;
+  /* background-color:#222; */
+  padding:1.5em;}
 
 
 /* Clearing
