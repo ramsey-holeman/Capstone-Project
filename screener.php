@@ -152,6 +152,7 @@ session_start();
         <th>Company Name</th>
         <th>Market Cap</th>
         <th>Price</th>
+        <th>Add to Database</th>
       </tr>
     </thead>
     <tbody>      
@@ -160,12 +161,14 @@ session_start();
       foreach ($data as $stock) {
         $marketCap = number_format($stock['marketCap']);
         $price = round(2, $stock['price']);
+        $ticker = $stock['symbol'];
       ?>
       <tr>
         <td><?php echo $stock['symbol']; ?></td>
         <td><?php echo $stock['companyName']; ?></td>
         <td><?php echo $marketCap; ?></td>
         <td><?php echo $stock['price']; ?></td>
+        <td><?php echo "<a href='add_list.php?ticker=$ticker'>Add $ticker to watchlist</a>"?></td>
       </tr>
       <?php
         }

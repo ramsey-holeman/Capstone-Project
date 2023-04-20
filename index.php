@@ -111,11 +111,20 @@ session_start();
                 };  
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));  
         chart.draw(data, options);  
-    }  
+
+        function resizeChart () {
+        chart.draw(data, options);
+        }
+
+      window.onload = resizeChart();
+      window.onresize = resizeChart;
+    }
     </script> 
     
     <h6 style="text-align:center">Stocks In Your Portfolio by Share Number</h6>
-    <div id="piechart" class="chartClass"></div>
+    <div class="chart-container">
+      <div id="piechart" class="chartClass"></div>
+    </div>
 <table>
   <tr>
       <th>Symbol</th>
