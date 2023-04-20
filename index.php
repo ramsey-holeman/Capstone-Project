@@ -15,7 +15,28 @@ session_start();
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="skeleton.css">
     <div id="wrap">
-    <?php
+        <nav>
+            <ul class="navbar">
+                <a href="index.php">Dashboard</a>
+                <a href="portfolio_edit.php">Edit Portfolio</a>
+                <a href="options.php">Stock Options</a>
+                <a href="screener.php">Stock Screener</a>
+                <a href="stock_news.php">News</a>
+                <a href="logout.php">Logout</a>
+            </ul>
+        </nav>
+    </div>    
+  </header>
+</head>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>   
+</head>
+<?php
   echo "<marquee class='watchlistMarquee' direction='left' scrollamount='8' behavior='scroll'>";
     $wSQL = "SELECT ticker FROM watchlist WHERE user_id = $id";
     $watchlist = mysqli_query($conn, $wSQL);
@@ -43,27 +64,6 @@ session_start();
     }
   echo "</marquee>";
   ?>
-        <nav>
-            <ul class="navbar">
-                <a href="index.php">Dashboard</a>
-                <a href="portfolio_edit.php">Edit Portfolio</a>
-                <a href="options.php">Stock Options</a>
-                <a href="screener.php">Stock Screener</a>
-                <a href="stock_news.php">News</a>
-                <a href="logout.php">Logout</a>
-            </ul>
-        </nav>
-    </div>    
-  </header>
-</head>
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>   
-</head>
 <body>
     <h1>Portfolio Dashboard</h1>
     <h4>Hello, <?php echo $user_data['first_name']; echo " "; echo $user_data['last_name']; ?>! Welcome back!</h4>    
