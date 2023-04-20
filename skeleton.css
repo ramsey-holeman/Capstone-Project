@@ -632,11 +632,9 @@ there.
 @media (min-width: 1200px) {}
 
 /* Light mode styles */
-@media (prefers-color-scheme: light) {
-  :root {
-    --background-color: #333;
-    --text-color: #fff;
-  }
+:root {
+  --background-color: #333;
+  --text-color: #fff;
 }
 
 
