@@ -632,10 +632,13 @@ there.
 @media (min-width: 1200px) {}
 
 /* Light mode styles */
-:root {
-  --background-color: #fff;
-  --text-color: #333;
+@media (prefers-color-scheme: light) {
+  :root {
+    --background-color: #333;
+    --text-color: #fff;
+  }
 }
+
 
 /* Dark mode styles */
 @media (prefers-color-scheme: dark) {
