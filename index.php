@@ -14,18 +14,42 @@ session_start();
   <header>
     <link rel="stylesheet" href="normalize.css">
     <link rel="stylesheet" href="skeleton.css">
-    <div id="wrap">
-        <nav>
-            <ul class="navbar">
-                <a href="index.php">Dashboard</a>
-                <a href="portfolio_edit.php">Edit Portfolio</a>
-                <a href="options.php">Stock Options</a>
-                <a href="screener.php">Stock Screener</a>
-                <a href="stock_news.php">News</a>
-                <a href="logout.php">Logout</a>
-            </ul>
-        </nav>
-    </div>    
+    <div class="topnav" id="myTopnav">
+      <a href="index.php" class="active">Dashboard</a>
+      <div class="dropdown">
+        <button class="dropbtn">Portfolio
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="portfolio_edit.php">Stock Portfolio</a>
+          <a href="options.php">Options Portfolio</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <button class="dropbtn">Investing Tools
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="stock_news.php">News Search</a>
+          <a href="screener.php">Stock Screener</a>
+          <a href="watchlist.php">Watchlist</a>
+        </div>
+      </div>
+      <a href="logout.php">Logout</a>
+      <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
+    </div>
+    <script>
+      /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+      function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+          x.className += " responsive";
+        } else {
+          x.className = "topnav";
+        }
+      }
+    </script>
   </header>
 </head>
 <head>
@@ -87,11 +111,20 @@ session_start();
                 };  
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));  
         chart.draw(data, options);  
-    }  
+
+        function resizeChart () {
+        chart.draw(data, options);
+        }
+
+      window.onload = resizeChart();
+      window.onresize = resizeChart;
+    }
     </script> 
     
     <h6 style="text-align:center">Stocks In Your Portfolio by Share Number</h6>
-    <div id="piechart" class="chartClass"></div>
+    <div class="chart-container">
+      <div id="piechart" class="chartClass"></div>
+    </div>
 <table>
   <tr>
       <th>Symbol</th>
