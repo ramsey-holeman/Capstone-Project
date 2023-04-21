@@ -255,6 +255,26 @@ if (mysqli_num_rows($result) > 0) {
     echo "<h4>Current Profit/Loss</h4>";
     echo "Your currently have no profit on your closed positions, Go make a trade!";
   }
+
+?>
+
+<h4>Options</h4>
+<?php
+// Query to retrieve the closest date to the current date from the database
+$expire = "SELECT * FROM options WHERE date <= CURDATE() ORDER BY date DESC LIMIT 1";
+$exp_result = $conn->query($expire);
+
+
+if ($result->num_rows > 0) {
+    // Print the closest date to the current date
+    while($row = $exp_result->fetch_assoc()) {
+        echo "Your " . $row["call_put"] . " in " . $row["ticker"] . " expires " . $row["exp"];
+    }
+} else {
+    echo "No results found.";
+}
+
+// Close the database connection
 mysqli_close($conn);
 ?>
 </body>
