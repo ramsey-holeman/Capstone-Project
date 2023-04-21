@@ -1,8 +1,12 @@
 <?php
+
 include "db_connect.php";
+include "functions.php";
+$user_data = check_login($conn);
+$id = $user_data['user_id'];
 
 // Query the database to get portfolio data
-$sql = "SELECT ticker, share_num, cost FROM stocks";
+$sql = "SELECT ticker, share_num, cost FROM stocks WHERE user_id = $id";
 $result = $conn->query($sql);
 
 // Calculate the current value of each stock using the Financial Modeling Prep API
