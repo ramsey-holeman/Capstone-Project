@@ -57,11 +57,11 @@ session_start();
   <title>Watchlist</title>
 </head>
 <body>
-    <h1>Watch List</h1>
+    <h1 style="text-align: center;">Watch List</h1>
     <p style="text-align: center;">Enter the stock you want to add to your watch list:</p>
-    <form action="watchlist.php" method="post">
+    <form action="watchlist.php" method="post" style="text-align: center;">
         <input type="text" name="list" id="list">
-        <input type="submit" name="save" value="Save">
+        <input type="submit" name="save" value="Add">
     </form>
     <?php
     if($_SERVER["REQUEST_METHOD"] == "POST"){

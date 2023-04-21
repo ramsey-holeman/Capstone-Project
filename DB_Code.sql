@@ -1,22 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Generation Time: Apr 19, 2023 at 10:55 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
 --
 -- Database: `capstone_db`
 --
@@ -84,12 +65,25 @@ CREATE TABLE `options` (
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `options`
+-- Table structure for table `profit_loss`
 --
 
-INSERT INTO `options` (`id`, `user_id`, `ticker`, `contract_num`, `call_put`, `cost`, `date`) VALUES
-(0, 9654, 'AAPL', 2, 'Call', '0.30', '2023-04-17');
+CREATE TABLE `profit_loss` (
+  `ID` int(11) NOT NULL,
+  `user_id` bigint(20) NOT NULL,
+  `stock_pl` int(11) NOT NULL,
+  `options_pl` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `profit_loss`
+--
+
+INSERT INTO `profit_loss` (`ID`, `user_id`, `stock_pl`, `options_pl`) VALUES
+(1, 9654, 40, 0);
 
 -- --------------------------------------------------------
 
@@ -144,7 +138,7 @@ CREATE TABLE `stocks` (
 INSERT INTO `stocks` (`id`, `user_id`, `ticker`, `share_num`, `cost`, `date`) VALUES
 (9, 9654, 'MSFT', 4, '260.00', '2023-04-04'),
 (10, 9654, 'AAPL', 1, '100.00', '2023-04-03'),
-(11, 9654, 'SOFI', 10, '3.80', '2023-04-06');
+(11, 9654, 'SOFI', 4, '3.80', '2023-04-06');
 
 -- --------------------------------------------------------
 
@@ -180,8 +174,23 @@ CREATE TABLE `watchlist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data for table `watchlist`
+--
+
+INSERT INTO `watchlist` (`wid`, `user_id`, `ticker`) VALUES
+(1, 9654, 'MSFT'),
+(2, 9654, 'DUK'),
+(3, 9654, 'META');
+
+--
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `profit_loss`
+--
+ALTER TABLE `profit_loss`
+  ADD PRIMARY KEY (`ID`);
 
 --
 -- Indexes for table `stocks`
@@ -200,6 +209,12 @@ ALTER TABLE `watchlist`
 --
 
 --
+-- AUTO_INCREMENT for table `profit_loss`
+--
+ALTER TABLE `profit_loss`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `stocks`
 --
 ALTER TABLE `stocks`
@@ -209,9 +224,5 @@ ALTER TABLE `stocks`
 -- AUTO_INCREMENT for table `watchlist`
 --
 ALTER TABLE `watchlist`
-  MODIFY `wid` bigint(200) NOT NULL AUTO_INCREMENT;
+  MODIFY `wid` bigint(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
