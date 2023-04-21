@@ -56,7 +56,7 @@ session_start();
     <title>Stock Portfolio</title>
 </head>
 <body>
-    <h2>Add Stocks</h2>
+    <h2 style="text-align: center;">Add Stocks</h2>
     <div>
     <p>Here you can add stocks that are in your portfolio</p>
 

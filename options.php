@@ -56,7 +56,7 @@ session_start();
     <title>Options Portfolio</title>
 </head>
 <body>
-    <h2>Options Positions</h2>
+    <h2 style="text-align: center;">Options Positions</h2>
     <div>
     <p></p>
 

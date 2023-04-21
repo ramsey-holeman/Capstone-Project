@@ -130,6 +130,10 @@ body {
   color: var(--text-color);
 }
 
+div {
+  text-align: center;
+}
+
 
 /* Typography
 –––––––––––––––––––––––––––––––––––––––––––––––––– */

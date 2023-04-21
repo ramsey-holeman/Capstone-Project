@@ -59,8 +59,8 @@ session_start();
   <link rel="stylesheet" href="style.css">  
 </head>
 <body>
-  <h1>Stock Screener</h1>
-  <p>Enter parameters below to screen for stocks</p>
+  <h1 style="text-align: center;">Stock Screener</h1>
+  <p style="text-align: center;">Enter parameters below to screen for stocks</p>
   <form action="" method="POST">
     <label for="max_cap">Market cap greater than:</label>
     <input type="number" name="max_cap" id="max_cap">
