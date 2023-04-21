@@ -245,9 +245,10 @@ if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
       $stock = 0 + $row['stock_pl'];
       $options = 0 + $row['option_pl'];
+      $total_pl = $stock + $options;
   ?>
 <h4>Current Profit/Loss</h4>
-<p>Currently your total profit on your closed stock positions are <?php echo "$" . "$stock"?> and for options positions <?php echo "$" . "$options"?> </p>
+<p>Currently your total profit on your closed stock positions are <?php echo "$" . "$stock"?> and for options positions <?php echo "$" . "$options"?>. In total you have made: <?php echo "$" . "$total_pl" ?> </p>
 <?php
     }
   }else {
