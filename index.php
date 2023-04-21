@@ -1,3 +1,4 @@
+<?php error_reporting(0); ?> 
 <?php
 session_start();
     include "db_connect.php";
@@ -232,15 +233,28 @@ if (mysqli_num_rows($result) > 0) {
 } else {
   echo "No stocks found in database.\n";
 }
-mysqli_close($conn);
 ?>
   </tbody>
   </table>
   
   <?php
+  $sql = "SELECT * FROM profit_loss WHERE user_id = $id";
+  $result = mysqli_query($conn, $sql);
+  if (mysqli_num_rows($result) > 0) {
 
+    while ($row = mysqli_fetch_assoc($result)) {
+      $stock = 0 + $row['stock_pl'];
+      $options = 0 + $row['option_pl'];
   ?>
 <h4>Current Profit/Loss</h4>
-<p></p>
+<p>Currently your total profit on your closed stock positions are <?php echo "$" . "$stock"?> and for options positions <?php echo "$" . "$options"?> </p>
+<?php
+    }
+  }else {
+    echo "<h4>Current Profit/Loss</h4>";
+    echo "Your currently have no profit on your closed positions, Go make a trade!";
+  }
+mysqli_close($conn);
+?>
 </body>
 </html>
