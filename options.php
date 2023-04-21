@@ -70,6 +70,7 @@ session_start();
         $cost = $_POST['cost'];
         $date = $_POST['date'];
         $call_put = $_POST['call_put'];
+        $exp = $_POST['exp_date'];
 
         //Makes the ticker uppercase
         $stock = strtoupper($stock);
@@ -83,7 +84,7 @@ session_start();
                 // If not found save to database
                 if ($result->num_rows == 0){
                     $id = $_SESSION['user_id'];
-                    $sql = "INSERT INTO options (user_id,ticker,contract_num,cost,call_put,date) VALUES('$id', '$stock', '$contract', '$cost', '$call_put', '$date')";
+                    $sql = "INSERT INTO options (user_id,ticker,contract_num,cost,call_put,date,exp) VALUES('$id', '$stock', '$contract', '$cost', '$call_put', '$date', '$exp')";
                     mysqli_query($conn, $sql);
                     echo "Position added successfully. You have bought $contract shares of $stock";
                     header("Location: options.php");
