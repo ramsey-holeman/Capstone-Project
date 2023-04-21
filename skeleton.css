@@ -407,6 +407,14 @@ pre > code {
 .active {
   /* background-color: #04AA6D; */
   color: white;
+  /* font-size: 17px; */
+  border: none;
+  outline: none;
+  color: white;
+  padding: 10px 12px;
+  background-color: inherit;
+  font-family: inherit;
+  /* margin: 0; */
 }
 
 /* Hide the link that should open and close the topnav on small screens */

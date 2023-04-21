@@ -66,7 +66,7 @@ session_start();
         // something was posted
         // Collect information from form
         $stock = $_POST['ticker'];
-        $shares = $_POST['con_num'];
+        $contract = $_POST['con_num'];
         $cost = $_POST['cost'];
         $date = $_POST['date'];
         $call_put = $_POST['call_put'];
@@ -76,16 +76,16 @@ session_start();
      
         // If statement works only if a certain button is pressed
         if(isset($_POST['buy_stock'])) {
-            if(!empty($stock) && !empty($shares) && !empty($cost) && !empty($date) && !empty($call_put)){
+            if(!empty($stock) && !empty($contract) && !empty($cost) && !empty($date) && !empty($call_put)){
                 $id = $_SESSION['user_id'];
                 $check_stock = "SELECT * FROM options WHERE ticker='$stock' AND user_id='$id' LIMIT 1";
                 $result = mysqli_query($conn, $check_stock);
                 // If not found save to database
                 if ($result->num_rows == 0){
                     $id = $_SESSION['user_id'];
-                    $sql = "INSERT INTO options (user_id,ticker,contract_num,cost,call_put,date) VALUES('$id', '$stock', '$shares', '$cost', '$call_put', '$date')";
+                    $sql = "INSERT INTO options (user_id,ticker,contract_num,cost,call_put,date) VALUES('$id', '$stock', '$contract', '$cost', '$call_put', '$date')";
                     mysqli_query($conn, $sql);
-                    echo "Position added successfully. You have bought $shares shares of $stock";
+                    echo "Position added successfully. You have bought $contract shares of $stock";
                     header("Location: options.php");
                     exit();
                 }
@@ -93,11 +93,11 @@ session_start();
                     $id = $_SESSION['user_id'];
                     $sql = "UPDATE options SET contract_num = contract_num + ? WHERE ticker = ? AND user_id = ?";
                     $stmt = mysqli_prepare($conn, $sql);
-                    mysqli_stmt_bind_param($stmt, 'isi', $shares, $stock, $id);
+                    mysqli_stmt_bind_param($stmt, 'isi', $contract, $stock, $id);
                     mysqli_stmt_execute($stmt);
                     
                     //Add and average cost function
-                    echo "Position updated successfully. You have bought $shares shares of $stock";
+                    echo "Position updated successfully. You have bought $contract shares of $stock";
                     header("Location: options.php");
                     exit();
                 }
@@ -108,8 +108,9 @@ session_start();
         }
         if(isset($_POST['sell_stock'])) {
            
-            if(!empty($stock) && !empty($shares) && !empty($cost) && !empty($date)){
-                
+            if(!empty($stock) && !empty($contract) && !empty($cost) && !empty($date)){
+                $t_con = $contract * 100;
+                $totalval = $cost * $contract; 
                 $check_stock = "select * from options where ticker='$stock' limit 1";
                 $result = mysqli_query($conn, $check_stock);
                 // Checks if stock is in the database
@@ -117,9 +118,22 @@ session_start();
                     $id = $_SESSION['user_id'];
                     $sql = "UPDATE options SET contract_num = contract_num - ? WHERE ticker = ? AND user_id = ?";
                     $stmt = mysqli_prepare($conn, $sql);
-                    mysqli_stmt_bind_param($stmt, 'isi', $shares, $stock, $id);
+                    mysqli_stmt_bind_param($stmt, 'isi', $contract, $stock, $id);
                     mysqli_stmt_execute($stmt);
+                    
+                    $check_user = "select * from profit_loss where user_id='$id' limit 1";
+                    $pl = mysqli_query($conn, $check_user);
 
+                    if ($pl->num_rows == 0){
+                      $in = "insert into profit_loss (user_id,options_pl) values('$id', '$totalval')";
+                      mysqli_query($conn, $in);
+                    }else{
+                      $in = "UPDATE profit_loss SET options_pl = options_pl + ? WHERE user_id = ?";
+                      $instmt = mysqli_prepare($conn, $in);
+                      mysqli_stmt_bind_param($instmt, 'ii', $totalval, $id);
+                      mysqli_stmt_execute($instmt);
+                    }
+                    
                     // Your SQL query to delete the row
                     $sql = "DELETE FROM options WHERE contract_num <= 0";
 
@@ -130,7 +144,7 @@ session_start();
                     }
 
                     $conn->close();
-                    echo "Position updated successfully. You have sold $shares shares of $stock";
+                    echo "Position updated successfully. You have sold $contract shares of $stock";
                     header("Location: options.php");
                     exit();
                 }

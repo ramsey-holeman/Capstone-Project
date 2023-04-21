@@ -107,7 +107,7 @@ session_start();
         }
         if(isset($_POST['sell_stock'])) {
             if(!empty($stock) && !empty($shares) && !empty($cost) && !empty($date)){
-
+                $totalval = $cost * $shares; 
                 $check_stock = "select * from stocks where ticker='$stock' limit 1";
                 $result = mysqli_query($conn, $check_stock);
                 // Checks if stock is in the database
@@ -117,6 +117,20 @@ session_start();
                     $stmt = mysqli_prepare($conn, $sql);
                     mysqli_stmt_bind_param($stmt, 'isi', $shares, $stock, $id);
                     mysqli_stmt_execute($stmt);
+
+                    $check_user = "select * from profit_loss where user_id='$id' limit 1";
+                    $pl = mysqli_query($conn, $check_user);
+
+                    if ($pl->num_rows == 0){
+                      $in = "insert into profit_loss (user_id,stock_pl) values('$id', '$totalval')";
+                      mysqli_query($conn, $in);
+                    }else{
+                      $in = "UPDATE profit_loss SET stock_pl = stock_pl + ? WHERE user_id = ?";
+                      $instmt = mysqli_prepare($conn, $in);
+                      mysqli_stmt_bind_param($instmt, 'ii', $totalval, $id);
+                      mysqli_stmt_execute($instmt);
+                    }
+                    
                     
                     // SQL query to delete the row
                     $sql = "DELETE FROM stocks WHERE share_num <= 0";
