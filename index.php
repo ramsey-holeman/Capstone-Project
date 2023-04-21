@@ -58,7 +58,8 @@ session_start();
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio Dashboard</title>
   <link rel="stylesheet" href="style.css">
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>   
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
 </head>
 <?php
   echo "<marquee class='watchlistMarquee' direction='left' scrollamount='8' behavior='scroll'>";
@@ -91,40 +92,73 @@ session_start();
 <body>
     <h1>Portfolio Dashboard</h1>
     <h4>Hello, <?php echo $user_data['first_name']; echo " "; echo $user_data['last_name']; ?>! Welcome back!</h4>    
-    <script type="text/javascript">
-    google.charts.load('current', {'packages':['corechart']});  
-    google.charts.setOnLoadCallback(drawChart);  
-    function drawChart()  
-    {  
-        var data = google.visualization.arrayToDataTable([  
-                    ['ticker', 'share_num'],  
-                    <?php  
-                    while($row = mysqli_fetch_array($result))  
-                    {  
-                        echo "['".$row["ticker"]."', ".$row["share_num"]."],";  
-                    }  
-                    ?>  
-                ]);  
-        var options = {  
-                title: '',  
-                pieHole: 0.4  
-                };  
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));  
-        chart.draw(data, options);  
+<body>
+  <div style="width:100%;">
+    <canvas id="piechart"></canvas>
+  </div>
+  <script>
+      // Send an AJAX request to the server to retrieve data from the MySQL database.
+      var xmlhttp = new XMLHttpRequest();
+      var url = "get_portfolio_data.php";
+      xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              // Parse the JSON response from the server into an array.
+              var data = JSON.parse(this.responseText);
 
-        function resizeChart () {
-        chart.draw(data, options);
-        }
+              // Create the data array.
+              var dataArray = [];
+              var backgroundColorArray = ["#0072c6", "#00FF00", "#00FFFF", "#FFF00FF", "#fffbbb78"];
+              // var backgroundColorArray = ["#4CAF50", "#2196F3", "#FFC107", "#9C27B0", "#FF5722"];
+              for (var i = 0; i < data.length; i++) {
+                  dataArray.push(data[i].value);
+                  // backgroundColorArray.push(getRandomColor());
+              }
 
-      window.onload = resizeChart();
-      window.onresize = resizeChart;
-    }
-    </script> 
-    
-    <h6 style="text-align:center">Stocks In Your Portfolio by Share Number</h6>
-    <div class="chart-container">
-      <div id="piechart" class="chartClass"></div>
-    </div>
+              // Set chart options.
+              var options = {
+                  title: {
+                      display: true,
+                      text: 'Stock Portfolio'
+                  },
+                  legend: {
+                        labels: {
+                            fontColor: '#FFFFFF'
+                        }
+                    },
+                  responsive: true,
+                  maintainAspectRatio: false
+              };
+
+              // Instantiate and draw the pie chart.
+              var pieChart = new Chart(document.getElementById('piechart'), {
+                  type: 'pie',
+                  data: {
+                      labels: data.map(function(item) {
+                          return item.ticker;
+                      }),
+                      datasets: [{
+                          data: dataArray,
+                          backgroundColor: backgroundColorArray
+                      }]
+                  },
+                  options: options
+              });
+          }
+      };
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+
+      function getRandomColor() {
+          var letters = '0123456789ABCDEF';
+          var color = '#';
+          for (var i = 0; i < 6; i++) {
+              color += letters[Math.floor(Math.random() * 16)];
+          }
+          return color;
+      }
+  </script>
+</body>
+<caption style="text-align:center">Stocks in your portfolio</caption>
 <table>
   <tr>
       <th>Symbol</th>
@@ -142,7 +176,7 @@ $sql = "SELECT ticker, share_num, cost FROM stocks WHERE user_id = $id";
 $result = mysqli_query($conn, $sql);
 
 if (mysqli_num_rows($result) > 0) {
-  // For each stock symbol, make a request to the IEX Cloud API to retrieve its latest price
+  // For each stock symbol, make a request to the Financial Modeling Prep API to retrieve its latest price
   while ($row = mysqli_fetch_assoc($result)) {
     $symbol = $row['ticker'];
     $shares = $row['share_num'];
@@ -201,6 +235,12 @@ if (mysqli_num_rows($result) > 0) {
 mysqli_close($conn);
 ?>
   </tbody>
-  </table> 
+  </table>
+  
+  <?php
+
+  ?>
+<h4>Current Profit/Loss</h4>
+<p></p>
 </body>
 </html>
