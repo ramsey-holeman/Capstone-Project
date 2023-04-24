@@ -71,6 +71,7 @@
         $pword = $_POST['pword'];
         if(!empty($email)){
           // read from database
+          // Checks if the email address exists in the database
           $sql = "select * from users where email='$email' limit 1";
           $result = mysqli_query($conn, $sql);  
           if($result){

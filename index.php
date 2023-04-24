@@ -97,6 +97,7 @@ session_start();
   <div style="width:100%;">
     <canvas id="piechart"></canvas>
   </div>
+  <!-- Chart for portfolio -->
   <script>
       // Send an AJAX request to the server to retrieve data from the MySQL database.
       var xmlhttp = new XMLHttpRequest();
@@ -263,7 +264,6 @@ if (mysqli_num_rows($result) > 0) {
 // Query to retrieve the closest date to the current date from the database
 $expire = "SELECT * FROM options WHERE date <= CURDATE() ORDER BY date DESC LIMIT 1";
 $exp_result = $conn->query($expire);
-
 
 if ($result->num_rows > 0) {
     // Print the closest date to the current date

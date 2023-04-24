@@ -89,6 +89,7 @@ session_start();
                     exit();
                 }
                 else{
+                  // Update portfolio number
                     $id = $_SESSION['user_id'];
                     $sql = "UPDATE stocks SET share_num = share_num + ? WHERE ticker = ? AND user_id = ?";
                     $stmt = mysqli_prepare($conn, $sql);
@@ -130,7 +131,6 @@ session_start();
                       mysqli_stmt_bind_param($instmt, 'ii', $totalval, $id);
                       mysqli_stmt_execute($instmt);
                     }
-                    
                     
                     // SQL query to delete the row
                     $sql = "DELETE FROM stocks WHERE share_num <= 0";

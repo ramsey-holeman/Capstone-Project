@@ -61,6 +61,7 @@ session_start();
 <body>
   <h1 style="text-align: center;">Stock Screener</h1>
   <p style="text-align: center;">Enter parameters below to screen for stocks</p>
+  <!-- Form to screen for stocks -->
   <form action="" method="POST">
     <label for="max_cap">Market cap greater than:</label>
     <input type="number" name="max_cap" id="max_cap">
@@ -123,6 +124,7 @@ session_start();
 
   </form>
   <?php
+    // Stores to variables
     if($_SERVER["REQUEST_METHOD"] == "POST"){
       $max_cap = $_POST["max_cap"];
       $min_cap = $_POST["min_cap"];
@@ -157,7 +159,7 @@ session_start();
     </thead>
     <tbody>      
       <?php
-      // Loop through the results of the form submission
+      // Loop through the results of the form submission and put them in a HTML table
       foreach ($data as $stock) {
         $marketCap = number_format($stock['marketCap']);
         $price = round(2, $stock['price']);

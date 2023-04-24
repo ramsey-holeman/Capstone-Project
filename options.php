@@ -124,11 +124,12 @@ session_start();
                     
                     $check_user = "select * from profit_loss where user_id='$id' limit 1";
                     $pl = mysqli_query($conn, $check_user);
-
+                    // Checks if user has a row in the table, if not it will start a new row
                     if ($pl->num_rows == 0){
                       $in = "insert into profit_loss (user_id,options_pl) values('$id', '$totalval')";
                       mysqli_query($conn, $in);
                     }else{
+                      // If the user has a row it will be updated accordingly
                       $in = "UPDATE profit_loss SET options_pl = options_pl + ? WHERE user_id = ?";
                       $instmt = mysqli_prepare($conn, $in);
                       mysqli_stmt_bind_param($instmt, 'ii', $totalval, $id);
@@ -155,10 +156,8 @@ session_start();
             }else{
                 echo "Please enter some valid information";
             }
-        }
-        
+        }     
       }
-
     ?>
 
     <form action="#" method = "post" autocomplete="off">
@@ -199,6 +198,7 @@ session_start();
             </thead>
             <tbody>
                 <?php
+                  // Shows the options that are open in the account
                     $id = $_SESSION['user_id'];
                     $results = mysqli_query($conn, "SELECT * FROM options WHERE user_id = $id");
                     while($row = mysqli_fetch_array($results)) {

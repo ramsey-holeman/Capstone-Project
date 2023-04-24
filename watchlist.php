@@ -64,11 +64,13 @@ session_start();
         <input type="submit" name="save" value="Add">
     </form>
     <?php
+    // When ticker is set then add ticker to a variable
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         $ticker = $_POST['list'];
 
         if(isset($_POST['save'])){
             if(!empty($ticker)){
+                // When saved is pressed and ticker is not empty then it will save to the database
                 $sql = "INSERT INTO watchlist (user_id,ticker) VALUES ('$id','$ticker')";
                 mysqli_query($conn, $sql);
                 header("location: watchlist.php");

@@ -60,6 +60,7 @@ session_start();
 <body>
     <h1>Add Stock</h1>
     <?php
+        // If the ticker is set then it will insert the ticker into the watchlist
         if(isset($_GET['ticker'])) {
             $ticker = $_GET['ticker'];
             $sql = "INSERT INTO watchlist (user_id, ticker) VALUES ('$id', '$ticker')";

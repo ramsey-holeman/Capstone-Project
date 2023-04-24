@@ -1,11 +1,4 @@
 <?php
-// // Database connection
-// $hostname = "localhost";
-// $username = "root";
-// $password = "";
-// $db = "capstone_db";
-// $conn = new mysqli($hostname, $username, $password, $db) or die("Connect failed: %s\n". $conn -> error);
-
 $hostname = "localhost";  // database host
 $username = "root"; // initial username
 $password = ""; // initial password
@@ -14,7 +7,7 @@ $db = "capstone_db"; // database name
 // create mysqli object and connect to database
 $conn = new mysqli($hostname, $username, $password, $db);
 
-// check connection
+// Connection for the database on the website
 if ($conn->connect_error) {
     // connection failed, try new username and password
     $username = "u230170949_root"; // new username

@@ -7,6 +7,7 @@ session_start();
     $ticker = $_GET['ticker'];
 
     if(isset($_GET['ticker'])) {
+        // if the ticker is set then delete the ticker from the watchlist
         $stmt = $conn->prepare("DELETE FROM watchlist WHERE user_id=? AND ticker=?");
         $stmt->bind_param("is", $id, $ticker);
         $stmt->execute();
