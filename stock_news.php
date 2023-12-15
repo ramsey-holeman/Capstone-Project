@@ -109,8 +109,7 @@ session_start();
     }
 }else{
   // If ticker array is not set then make it null
-  $ticker = null;
-}
+  $ticker = null;}
 ?>
   
 </body>
